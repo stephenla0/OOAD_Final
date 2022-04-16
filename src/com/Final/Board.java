@@ -105,11 +105,11 @@ public class Board {
     }
 
     void initializeTestCareers(){
-        for (int i = 0; i < 6; i++){
+        for (int i = 1; i < 6; i++){
             availableCareers.add(new Career("Career " + (i+1), 100*i, 50*i, false));
         }
-        for (int i = 0; i < 6; i++){
-            availableCollegeCareers.add(new Career("Career " + (i+1), 100*i, 50*i, true));
+        for (int i = 1; i < 6; i++){
+            availableCollegeCareers.add(new Career("College Career " + (i+1), 200*i, 100*i, true));
         }
     }
 
