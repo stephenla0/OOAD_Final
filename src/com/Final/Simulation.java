@@ -40,7 +40,7 @@ public class Simulation {
     }
 
     void startTestSim(){
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < (2*board.boardSpaceCards.size()); i++){
             newPlayerTurn();
         }
     }

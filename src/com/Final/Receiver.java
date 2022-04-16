@@ -42,11 +42,17 @@ public class Receiver {
     }
 
     public void payTaxes(){
-
+        System.out.println("Your balance is $" + sim.activePlayer.money);
+        int tax = sim.activePlayer.career.taxes;
+        sim.activePlayer.money -= tax;
+        System.out.println("You got had to pay $" + tax + " in taxes bringing your balance to $" + sim.activePlayer.money);
     }
 
     public void collectTaxRefund(){
-
+        System.out.println("Your balance is $" + sim.activePlayer.money);
+        int tax = sim.activePlayer.career.taxes;
+        sim.activePlayer.money += tax;
+        System.out.println("You got $" + tax + " in a tax refund bringing your balance to $" + sim.activePlayer.money);
     }
 
     public void loseJob(){
@@ -54,17 +60,32 @@ public class Receiver {
     }
 
     public void getBaby(){
-
+        if(!sim.activePlayer.hasSpouse){
+            System.out.println("You can not have a baby since you do not have a spouse");
+            return;
+        }
+        sim.activePlayer.children++;
+        System.out.println("You and your spouse had a baby! You now have " + sim.activePlayer.children + " children.");
     }
 
     public void spinToWin(){
 
     }
 
-    public void payDay(){
-        sim.activePlayer.money += (sim.activePlayer.career.salary + (sim.activePlayer.career.numOfRaises * 10000));
+    private void getPaid(){
+        System.out.println("Your balance is $" + sim.activePlayer.money);
+        int pay = (sim.activePlayer.career.salary + (sim.activePlayer.career.numOfRaises * 100));
+        sim.activePlayer.money += pay;
+        System.out.println("You got paid $" + pay + " bringing your balance to $" + sim.activePlayer.money);
     }
-    public void payDayRaise(){}
+
+    public void payDay(){
+        getPaid();
+    }
+    public void payDayRaise(){
+        sim.activePlayer.career.numOfRaises++;
+        getPaid();
+    }
     /** Everything for choosing a career ************************************************************************************/
 
     private ArrayList<Career> getCareerOptions(boolean hasDegree){
@@ -218,9 +239,18 @@ public class Receiver {
      /******************************************************************************************/
     public void returnToSchool(){}
     public void graduateNightSchool(){}
-    public void getMarried(){}
+    public void getMarried(){
+        System.out.println("You got married!");
+        sim.activePlayer.hasSpouse = true;
+    }
     public void suePlayer(){}
-    public void takeLoan(){}
+    public void takeLoan(){
+        System.out.println("Your balance is $" + sim.activePlayer.money);
+        sim.activePlayer.numOfLoans++;
+        sim.activePlayer.money += 200;
+        System.out.println("You had to take a loan bringing your balance to $" + sim.activePlayer.money +
+                " and increasing your loan count to " +sim.activePlayer.numOfLoans);
+    }
     public void collectSTWcard(){}
     public void STWboost(){}
     public void STWcollect(){}

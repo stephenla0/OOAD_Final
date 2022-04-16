@@ -51,22 +51,23 @@ public class Board {
         boardSpaceCards.add( new BoardSpaceCard (new BuyStarterHomeCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new ChooseCareerCommand(simulation.receiver)) );
-
-        /** developing **/
-        boardSpaceCards.add( new BoardSpaceCard (new CalculateFinalScoresCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectMoneyCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectTaxRefundCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new GetBabyCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new GetMarriedCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new LoseJobCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new PayDayCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new PayDayRaiseCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new PayTaxesCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new CollectTaxRefundCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new TakeLoanCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new GetMarriedCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new GetBabyCommand(simulation.receiver)) );
+
+        /** developing
+        boardSpaceCards.add( new BoardSpaceCard (new CalculateFinalScoresCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new CollectMoneyCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new LoseJobCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new SpinToWinCommand(simulation.receiver)) );
@@ -75,7 +76,7 @@ public class Board {
         boardSpaceCards.add( new BoardSpaceCard (new STWexemptionCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new STWpayCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new SuePlayerCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new TakeLoanCommand(simulation.receiver)) );
+         **/
     }
     void initializeTestBoard(){
         for(int i = 0; i < boardSpaceCards.size(); i++){
@@ -99,7 +100,7 @@ public class Board {
     }
 
     void initializeTestLifeTiles(){
-        for (int i = 0; i < 6; i++){
+        for (int i = 1; i < 6; i++){
             availableLifeTiles.add(new LifeTile(100*i));
         }
     }
