@@ -8,6 +8,8 @@ public class BoardSpace {
     BoardSpaceCard card;
     String color;
     boolean interruptMovement;
+    int value;
+    String message;
 
     BoardSpace(BoardSpaceCard card, String color, boolean interruptMovement){
         forward = null;
@@ -17,6 +19,7 @@ public class BoardSpace {
         this.card = card;
         this.color = color;
         this.interruptMovement = interruptMovement;
+        value = 0;
     }
 
     public void setForward(BoardSpace forward) {
@@ -34,4 +37,6 @@ public class BoardSpace {
     public void setRight(BoardSpace right) {
         this.right = right;
     }
+
+    public void setValue(int value){this.value = value;}
 }

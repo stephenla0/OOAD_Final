@@ -9,6 +9,7 @@ public class Simulation {
     ArrayList<Player> players;
     ArrayList<Player> retiredPlayers;
     Player activePlayer;
+    Player cardUsePlayer;
     private int playerIndex;
     int round;
 
@@ -20,6 +21,7 @@ public class Simulation {
         players = new ArrayList<>();
         retiredPlayers = new ArrayList<>();
         activePlayer = null;
+        cardUsePlayer = null;
         round = 1;
 
         initializeTestPlayers(players);
@@ -29,8 +31,11 @@ public class Simulation {
         list.add(new Player("Player 1", board.boardHead));
         list.add(new Player("Player 2", board.boardHead));
 
-        list.get(0).money = 1000;
+        list.get(0).money = 100000;
+        list.get(1).money = 100000;
         list.get(0).hasDegree = true;
+
+        board.initializeTestBoardCards();
     }
 
     void startSim(){
@@ -60,10 +65,5 @@ public class Simulation {
             playerIndex = 0;
         }
         activePlayer = players.get(playerIndex);
-    }
-
-    void retirePlayer(){
-        players.remove(activePlayer);
-        retiredPlayers.add(activePlayer);
     }
 }

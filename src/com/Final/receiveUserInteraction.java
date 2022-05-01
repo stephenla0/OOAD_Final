@@ -17,6 +17,30 @@ public class receiveUserInteraction {
         this.terminate = false;
     }
 
+    public int getListSelectionRestricted(int min, int max, ArrayList<Integer> restrictions){
+        if(restrictions == null || restrictions.isEmpty()){
+            return getListSelection(min, max);
+        }
+        selection = max + 1;
+        boolean selected = false;
+        while (!selected) {
+            boolean restricted = false;
+            selection = input.nextInt();
+            if(selection >= min && selection <= max){
+                for(int i = 0; i < restrictions.size(); i++){
+                    if(restrictions.get(i) == selection){
+                        restricted = true;
+                    }
+                }
+                if(!restricted){
+                    selected = true;
+                }
+            }
+            if(!selected) System.out.println("Please enter a valid selection.");
+        }
+        return selection;
+    }
+
     public int getListSelection(int min, int max) {
         selection = max + 1;
         while (selection < min || selection > max) {
