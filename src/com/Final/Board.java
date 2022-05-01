@@ -50,11 +50,60 @@ public class Board {
         return Utility.rndFromRange(1, 10);
     }
 
-    BoardSpace move(BoardSpace space, int spin){
-        for(int i = 0; i < spin; i++){
-            space = space.forward;
+    void checkLTI(int spin){
+        for(int i=0; i < simulation.players.size(); i++){
+            if(simulation.players.get(i).LTI == spin){
+                System.out.println(simulation.players.get(i)+" won $5,000 from their Long-Term Investment on space "+spin);
+                simulation.players.get(i).money+=5000;
+                simulation.players.get(i).LTIhits++;
+            }
         }
-        return space;
+    }
+
+    void move(int spin){
+        checkLTI(spin);
+        for(int i = 0; i < spin; i++){
+            BoardSpace currentSpace = simulation.activePlayer.currentSpace;
+            if(currentSpace.interruptMovement) currentSpace.card.executeCommand();
+            if(currentSpace.left == null && currentSpace.right == null){
+                simulation.activePlayer.currentSpace = simulation.activePlayer.currentSpace.forward;
+            }
+            else{
+                System.out.println("Select which direction you want to go: (1: left, 2: forward, 3: right)");
+                ArrayList<Integer> restricted = new ArrayList<>();
+                if(currentSpace.left != null) {
+                    System.out.println("1: "+currentSpace.left.message);
+                    restricted.add(1);
+                }
+                if(currentSpace.forward != null) {
+                    System.out.println("2: "+currentSpace.left.message);
+                    restricted.add(2);
+                }
+                if(currentSpace.right != null) {
+                    System.out.println("3: "+currentSpace.left.message);
+                    restricted.add(3);
+                }
+                int selection = simulation.input.getListSelectionRestricted(1, 3, restricted);
+                switch(selection){
+                    case 1:{
+                        simulation.activePlayer.currentSpace=simulation.activePlayer.currentSpace.left;
+                        System.out.println(simulation.activePlayer.name+ " chose to go left on the "+simulation.activePlayer.currentSpace.message);
+                        break;
+                    }
+                    case 2:{
+                        simulation.activePlayer.currentSpace=simulation.activePlayer.currentSpace.forward;
+                        System.out.println(simulation.activePlayer.name+ " chose to go forward on the "+simulation.activePlayer.currentSpace.message);
+                        break;
+                    }
+                    case 3:{
+                        simulation.activePlayer.currentSpace=simulation.activePlayer.currentSpace.right;
+                        System.out.println(simulation.activePlayer.name+ " chose to go right on the "+simulation.activePlayer.currentSpace.message);
+                        break;
+                    }
+                }
+            }
+        }
+        simulation.activePlayer.currentSpace.card.executeCommand();
     }
 
     String selectPath(){
@@ -77,8 +126,6 @@ public class Board {
         boardSpaceCards.add( new BoardSpaceCard (new PayDayRaiseCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new PayTaxesCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new CollectTaxRefundCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new TakeLoanCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new BuyLTICommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new CollectMoneyCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new PayMoneyCommand(simulation.receiver)) );
@@ -101,7 +148,7 @@ public class Board {
     }
     void initializeTestBoard(){
         for(int i = 0; i < boardSpaceCards.size(); i++){
-            boardSpaces.add(new BoardSpace(boardSpaceCards.get(i), "black", true));
+            boardSpaces.add(new BoardSpace(boardSpaceCards.get(i), true));
             boardSpaces.get(i).value=7000;
         }
         for(int i = 0; i < boardSpaceCards.size() - 1; i++){
@@ -175,35 +222,119 @@ public class Board {
     }
 
     void initializeBoardSpaceCards(){
-        boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new BuyLTICommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new BuyStarterHomeCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new ChooseCareerCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectMoneyCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new CollectTaxRefundCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new GetBabyCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new GetMarriedCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new LoseJobCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new PayDayCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new PayDayRaiseCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new PayMoneyCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new PayTaxesCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new SpinToWinCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new StartCollegeCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new StartFirstTurnCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new SuePlayerCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new TakeLoanCommand(simulation.receiver)) );
+        /* Initialization commands */
+        /*0*/boardSpaceCards.add( new BoardSpaceCard (new StartFirstTurnCommand(simulation.receiver)) );
+        /*1*/boardSpaceCards.add( new BoardSpaceCard (new StartCollegeCommand(simulation.receiver)) );
+        /*2*/boardSpaceCards.add( new BoardSpaceCard (new GraduateCollegeCommand(simulation.receiver)) );
 
+        /* Board Space landing commands */
+        /*3*/boardSpaceCards.add( new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver)) );
+        /*4*/boardSpaceCards.add( new BoardSpaceCard (new CollectMoneyCommand(simulation.receiver)) );
+        /*5*/boardSpaceCards.add( new BoardSpaceCard (new PayMoneyCommand(simulation.receiver)) );
+        /*6*/boardSpaceCards.add( new BoardSpaceCard (new PayDayCommand(simulation.receiver)) );
+        /*7*/boardSpaceCards.add( new BoardSpaceCard (new PayDayRaiseCommand(simulation.receiver)) );
+        /*8*/boardSpaceCards.add( new BoardSpaceCard (new PayTaxesCommand(simulation.receiver)) );
+        /*9*/boardSpaceCards.add( new BoardSpaceCard (new CollectTaxRefundCommand(simulation.receiver)) );
+        /*10*/boardSpaceCards.add( new BoardSpaceCard (new LoseJobCommand(simulation.receiver)) );
+        /*11*/boardSpaceCards.add( new BoardSpaceCard (new SpinToWinCommand(simulation.receiver)) );
+        /*12*/boardSpaceCards.add( new BoardSpaceCard (new SuePlayerCommand(simulation.receiver)) );
 
+        /* Managing commands */
+        /*13*/boardSpaceCards.add( new BoardSpaceCard (new BuyStarterHomeCommand(simulation.receiver)) );
+        /*14*/boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
+        /*15*/boardSpaceCards.add( new BoardSpaceCard (new ChooseCareerCommand(simulation.receiver)) );
+        /*16*/boardSpaceCards.add( new BoardSpaceCard (new GetBabyCommand(simulation.receiver)) );
+        /*17*/boardSpaceCards.add( new BoardSpaceCard (new GetMarriedCommand(simulation.receiver)) );
+        /*18*/boardSpaceCards.add( new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver)) );
+        /*19*/boardSpaceCards.add( new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver)) );
+        /*20*/boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );
 
     }
 
+    BoardSpaceCard getCommand(int select){
+        switch(select){
+            case 0: return new BoardSpaceCard (new StartFirstTurnCommand(simulation.receiver));
+            case 1: return new BoardSpaceCard (new StartCollegeCommand(simulation.receiver));
+            case 2: return new BoardSpaceCard (new GraduateCollegeCommand(simulation.receiver));
+            case 3: return new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver));
+            case 4: return new BoardSpaceCard (new CollectMoneyCommand(simulation.receiver));
+            case 5: return new BoardSpaceCard (new PayMoneyCommand(simulation.receiver));
+            case 6: return new BoardSpaceCard (new PayDayCommand(simulation.receiver));
+            case 7: return new BoardSpaceCard (new PayDayRaiseCommand(simulation.receiver));
+            case 8: return new BoardSpaceCard (new PayTaxesCommand(simulation.receiver));
+            case 9: return new BoardSpaceCard (new CollectTaxRefundCommand(simulation.receiver));
+            case 10: return new BoardSpaceCard (new LoseJobCommand(simulation.receiver));
+            case 11: return new BoardSpaceCard (new SpinToWinCommand(simulation.receiver));
+            case 12: return new BoardSpaceCard (new SuePlayerCommand(simulation.receiver));
+            case 13: return new BoardSpaceCard (new BuyStarterHomeCommand(simulation.receiver));
+            case 14: return new BoardSpaceCard (new BuyHomeCommand(simulation.receiver));
+            case 15: return new BoardSpaceCard (new ChooseCareerCommand(simulation.receiver));
+            case 16: return new BoardSpaceCard (new GetBabyCommand(simulation.receiver));
+            case 17: return new BoardSpaceCard (new GetMarriedCommand(simulation.receiver));
+            case 18: return new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver));
+            case 19: return new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver));
+            case 20: return new BoardSpaceCard (new RetireCommand(simulation.receiver));
+            default: return null;
+        }
+    }
+
+    BoardSpace createSpace(int num, boolean stop, BoardSpace prevSpace, int value){
+        BoardSpace newSpace = new BoardSpace(getCommand(num), stop);
+        newSpace.value=value;
+        boardSpaces.add(newSpace);
+        prevSpace.forward = newSpace;
+        prevSpace=newSpace;
+        return prevSpace;
+    }
+
     void initializeBoard(){
+        BoardSpace newSpace = new BoardSpace(boardSpaceCards.get(0), true);
+        BoardSpace prevSpace;
+        BoardSpace prevBranchSpace;
+        boardSpaces.add(newSpace);
+        boardHead = newSpace;
+
+        /* College Path*/
+        newSpace = new BoardSpace(getCommand(1), true);
+        boardSpaces.add(newSpace);
+        boardHead.left = newSpace;
+        prevSpace=newSpace;
+
+        newSpace = createSpace(4, false, newSpace, 10000);
+        newSpace = createSpace(5, false, newSpace, 5000);
+        newSpace = createSpace(3, false, newSpace, 0);
+        newSpace = createSpace(4, false, newSpace, 14000);
+        newSpace = createSpace(3, false, newSpace, 0);
+        newSpace = createSpace(5, false, newSpace, 10000);
+        newSpace = createSpace(3, false, newSpace, 0);
+        newSpace = createSpace(4, false, newSpace, 20000);
+        newSpace = createSpace(3, false, newSpace, 0);
+        prevBranchSpace = createSpace(2, true, newSpace, 0);
+
+        /*Career Path*/
+        newSpace = new BoardSpace(getCommand(15), true);
+        boardSpaces.add(newSpace);
+        boardHead.right = newSpace;
+        prevSpace=newSpace;
+
+        newSpace = createSpace(6, false, newSpace, 0);
+        newSpace = createSpace(5, false, newSpace, 5000);
+        newSpace = createSpace(4, false, newSpace, 10000);
+        newSpace = createSpace(6, false, newSpace, 0);
+        prevBranchSpace.forward=newSpace;
+
+        /* continue straight */
+        newSpace = createSpace(3, false, newSpace, 0);
+        newSpace = createSpace(5, false, newSpace, 5000);
+        newSpace = createSpace(3, false, newSpace, 0);
+        newSpace = createSpace(4, false, newSpace, 10000);
+        newSpace = createSpace(5, false, newSpace, 15000);
+        newSpace = createSpace(3, false, newSpace, 0);
+        newSpace = createSpace(3, false, newSpace, 0);
+        newSpace = createSpace(6, false, newSpace, 0);
+        newSpace = createSpace(4, false, newSpace, 20000);
+
+        newSpace = createSpace(17, true, newSpace, 0);
 
     }
 

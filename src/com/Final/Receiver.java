@@ -25,6 +25,7 @@ public class Receiver {
     }
 
     public void startFirstTurn(){
+        System.out.println("");
         System.out.println(sim.activePlayer.name+", would you like to attend college or start your career?");
         System.out.println("Starting your career immediately will leave you with no debt; however, you will not have immediate access to " +
                 "higher paying careers.");
@@ -328,6 +329,7 @@ public class Receiver {
         }
     }
     public void getMarried(){
+
         System.out.println(sim.activePlayer.name+" got married!");
         collectLifeTile();
         sim.activePlayer.hasSpouse = true;
@@ -365,13 +367,7 @@ public class Receiver {
         printBalance(sim.activePlayer);
         printBalance(sim.players.get(selection));
     }
-    public void takeLoan(){
-        sim.activePlayer.numOfLoans++;
-        sim.activePlayer.money += 200;
-        System.out.println(sim.activePlayer.name+" had to take a loan.");
-        printBalance(sim.activePlayer);
-        System.out.println(sim.activePlayer.name+" now has " +sim.activePlayer.numOfLoans + "loans");
-    }
+
     public void collectSTWcard(){
         if(sim.board.availableDeckCards.size() == 0){
             System.out.println(sim.activePlayer.name+" could not collect a Share The Wealth card as no more are available.");
@@ -379,7 +375,7 @@ public class Receiver {
         }
         System.out.println(sim.activePlayer.name+" collected a Share The Wealth Card.");
         sim.activePlayer.deckCards.add(sim.board.availableDeckCards.get(0));
-        sim.activePlayer.deckCards.remove(0);
+        sim.board.availableDeckCards.remove(0);
     }
 
     private void removeBoostCard(int boost){

@@ -6,18 +6,16 @@ public class BoardSpace {
     BoardSpace left;
     BoardSpace right;
     BoardSpaceCard card;
-    String color;
     boolean interruptMovement;
     int value;
     String message;
 
-    BoardSpace(BoardSpaceCard card, String color, boolean interruptMovement){
+    BoardSpace(BoardSpaceCard card, boolean interruptMovement){
         forward = null;
         backward = null;
         left = null;
         right = null;
         this.card = card;
-        this.color = color;
         this.interruptMovement = interruptMovement;
         value = 0;
     }
