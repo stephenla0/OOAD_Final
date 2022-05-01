@@ -56,6 +56,8 @@ public class Receiver {
     }
 
     public void loseJob(){
+        System.out.println(sim.activePlayer + " Loses their Job!!");
+
 
     }
 
@@ -237,13 +239,21 @@ public class Receiver {
     }
 
      /******************************************************************************************/
-    public void returnToSchool(){}
-    public void graduateNightSchool(){}
+    public void returnToSchool() //update user? Not sure where to keep this value
+    {
+        System.out.println(sim.activePlayer + " is returning to school!");
+        //sim.activePlayer.hasDegree
+    }
+    public void graduateNightSchool() //when graduating night school now gets degrree
+    {
+        System.out.println(sim.activePlayer + " is graduating Night School! Congratulations!");
+        sim.activePlayer.hasDegree = true;
+    }
     public void getMarried(){
         System.out.println("You got married!");
         sim.activePlayer.hasSpouse = true;
     }
-    public void suePlayer(){}
+    public void suePlayer(){} //not sure how to implement this one.
     public void takeLoan(){
         System.out.println("Your balance is $" + sim.activePlayer.money);
         sim.activePlayer.numOfLoans++;
@@ -256,7 +266,35 @@ public class Receiver {
     public void STWcollect(){}
     public void STWpay(){}
     public void STWexemption(){}
-    public void retire(){}
-    public void calculateFinalScores(){}
 
-}
+    public void retire() //partially implemented
+    {
+        double costLoans;
+        costLoans = sim.activePlayer.numOfLoans * 20000;
+        if(sim.activePlayer.numOfLoans == 0 || sim.activePlayer.money > costLoans)
+        {
+            System.out.println(sim.activePlayer + " is able to retire!");
+            sim.activePlayer.isRetired = true;
+            //sell back house
+            System.out.println(sim.activePlayer + " is selling back house.");
+            sell(sim.activePlayer.house.sellPrice);
+            //repay to bank any and all outstanding debts
+
+            //remove career
+            //keep long term investment cards
+            //collect 10,000 retirement gift form children
+            //choose to retire either at millionaire estates or countrysdie acres
+        }
+        else
+        {
+            System.out.println(sim.activePlayer + " is unable to retire as they do not have enough money to pay back loans");
+        }
+
+
+    }
+    public void calculateFinalScores(){
+        System.out.println(sim.activePlayer + " is at end of game.");
+        System.out.println( "The total amount of cash player has remaining: " + sim.activePlayer.money);
+        //turn life tiles over + add up dollar amounts with cash...highest value wins.
+    }
+
