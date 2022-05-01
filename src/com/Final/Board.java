@@ -31,12 +31,17 @@ public class Board {
         availableLTI = new ArrayList<>();
 
         initializeLTI();
-
-        initializeTestBoardSpaceCards();
+        initializeHouses();
+        initializeCareers();
+        initializeSTW();
+        initializeLifeTiles();
+        initializeBoardSpaceCards();
+        initializeBoard();
+        /*initializeTestBoardSpaceCards();
         initializeTestBoard();
         initializeTestHouses();
         initializeTestLifeTiles();
-        initializeTestCareers();
+        initializeTestCareers();*/
 
         initializeShuffle();
     }
@@ -63,8 +68,7 @@ public class Board {
     }
 
     void initializeTestBoardSpaceCards(){
-        /*boardSpaceCards.add( new BoardSpaceCard (new BuyStarterHomeCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new BuyStarterHomeCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver)) );
@@ -89,8 +93,8 @@ public class Board {
         boardSpaceCards.add( new BoardSpaceCard (new SuePlayerCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver)) );
         boardSpaceCards.add( new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver)) );
-        boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );*/
         boardSpaceCards.add( new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );
 
         /** developing
          **/
@@ -116,6 +120,93 @@ public class Board {
         }
     }
 
+    void initializeHouses(){
+        availableStarterHouses.add(new House("Mobile Home", 80000, 80000, true));
+        availableStarterHouses.add(new House("Condo", 100000, 105000, true));
+        availableStarterHouses.add(new House("Ranch Style", 140000, 160000, true));
+        availableStarterHouses.add(new House("Log Cabin", 120000, 140000, true));
+        availableStarterHouses.add(new House("Small Cape", 160000, 180000, true));
+        availableStarterHouses.add(new House("Tudor Style", 180000, 200000, true));
+
+        availableHouses.add(new House("Double Wide +RV", 300000, 300000, false));
+        availableHouses.add(new House("Executive Cape", 400000, 400000, false));
+        availableHouses.add(new House("Modern Victorian", 500000, 500000, false));
+        availableHouses.add(new House("Luxury Mountain Retreat", 600000, 600000, false));
+        availableHouses.add(new House("Penthouse Suite", 700000, 700000, false));
+        availableHouses.add(new House("Mansion", 800000, 800000, false));
+
+    }
+
+    void initializeCareers(){
+        availableCareers.add(new Career("Salesperson", 20000, 50000, 5000, false));
+        availableCareers.add(new Career("Hair Stylist", 30000, 60000, 10000, false));
+        availableCareers.add(new Career("Mechanic", 30000, 60000, 10000, false));
+        availableCareers.add(new Career("Police Officer", 40000, 70000, 15000, false));
+        availableCareers.add(new Career("Entertainer", 50000, -1, 20000, false));
+        availableCareers.add(new Career("Athlete", 60000, -1, 25000, false));
+
+        availableCollegeCareers.add(new Career("Teacher", 40000, 70000, 15000, true));
+        availableCollegeCareers.add(new Career("Computer Designer", 50000, 80000, 20000, true));
+        availableCollegeCareers.add(new Career("Accountant", 70000, 110000, 30000, true));
+        availableCollegeCareers.add(new Career("Veterinarian", 80000, 120000, 35000, true));
+        availableCollegeCareers.add(new Career("Lawyer", 90000, -1, 40000, true));
+        availableCollegeCareers.add(new Career("Doctor", 100000, -1, 45000, true));
+    }
+
+    void initializeSTW(){
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                availableDeckCards.add(new DeckCard(j));
+            }
+        }
+        for(int i = 0; i < 5; i++){
+            availableDeckCards.add(new DeckCard(4));
+        }
+    }
+
+    void initializeLifeTiles(){
+        for(int i = 0; i < 7; i++){
+            availableLifeTiles.add(new LifeTile(10000));
+            if(i<6)availableLifeTiles.add(new LifeTile(20000));
+            if(i<5)availableLifeTiles.add(new LifeTile(30000));
+            if(i<4)availableLifeTiles.add(new LifeTile(40000));
+            if(i<3)availableLifeTiles.add(new LifeTile(50000));
+        }
+    }
+
+    void initializeBoardSpaceCards(){
+        boardSpaceCards.add( new BoardSpaceCard (new BuyHomeCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new BuyLTICommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new BuyStarterHomeCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new ChooseCareerCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new CollectLifeTileCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new CollectMoneyCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new CollectTaxRefundCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new GetBabyCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new GetMarriedCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new LoseJobCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new PayDayCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new PayDayRaiseCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new PayMoneyCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new PayTaxesCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new SpinToWinCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new StartCollegeCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new StartFirstTurnCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new SuePlayerCommand(simulation.receiver)) );
+        boardSpaceCards.add( new BoardSpaceCard (new TakeLoanCommand(simulation.receiver)) );
+
+
+
+    }
+
+    void initializeBoard(){
+
+    }
+
     void initializeTestLifeTiles(){
         for (int i = 1; i < 6; i++){
             availableLifeTiles.add(new LifeTile(100*i));
@@ -124,10 +215,10 @@ public class Board {
 
     void initializeTestCareers(){
         for (int i = 1; i < 6; i++){
-            availableCareers.add(new Career("Career " + (i+1), 100*i, 50*i, false));
+            availableCareers.add(new Career("Career " + (i+1), 100*i, 10000, 50*i, false));
         }
         for (int i = 1; i < 6; i++){
-            availableCollegeCareers.add(new Career("College Career " + (i+1), 200*i, 100*i, true));
+            availableCollegeCareers.add(new Career("College Career " + (i+1), 200*i, 10000, 100*i, true));
         }
     }
 

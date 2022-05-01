@@ -45,6 +45,7 @@ public class receiveUserInteraction {
         selection = max + 1;
         while (selection < min || selection > max) {
             selection = input.nextInt();
+            if(selection < min || selection > max) System.out.println("Please enter a valid selection.");
         }
         return selection;
     }

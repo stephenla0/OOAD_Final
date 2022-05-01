@@ -24,7 +24,7 @@ public class Simulation {
         cardUsePlayer = null;
         round = 1;
 
-        initializeTestPlayers(players);
+        //initializeTestPlayers(players);
     }
 
     void initializeTestPlayers(ArrayList<Player> list){
@@ -36,6 +36,11 @@ public class Simulation {
         list.get(0).hasDegree = true;
 
         board.initializeTestBoardCards();
+
+        retiredPlayers.add(new Player("Player 3", board.boardHead));
+        retiredPlayers.get(0).lifeTiles.add(board.availableLifeTiles.get(0));
+        retiredPlayers.get(0).retiredAtEstates=true;
+        board.availableLifeTiles.remove(0);
     }
 
     void startSim(){

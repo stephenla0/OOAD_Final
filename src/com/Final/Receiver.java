@@ -24,6 +24,27 @@ public class Receiver {
         return false;
     }
 
+    public void startFirstTurn(){
+        System.out.println(sim.activePlayer.name+", would you like to attend college or start your career?");
+        System.out.println("Starting your career immediately will leave you with no debt; however, you will not have immediate access to " +
+                "higher paying careers.");
+        System.out.println("Attending college will provide you with immediate access to higher paying careers; however, " +
+                "you will need to take out $100,000 in loans.");
+        System.out.println("Which path would you like to take?");
+        System.out.println("1: Start career");
+        System.out.println("2: Attend college");
+        int selection = input.getListSelection(1,2);
+        if(selection == 1){
+            System.out.println(sim.activePlayer.name+" decided to start their career.");
+            sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
+        }
+        else{
+            System.out.println(sim.activePlayer.name+" decided to attend college.");
+            sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
+        }
+        sim.activePlayer.currentSpace.card.executeCommand();
+    }
+
     private void sell(int money){
         sim.activePlayer.money += money;
     }
@@ -32,6 +53,7 @@ public class Receiver {
         if(!sim.board.availableLifeTiles.isEmpty()){
             LifeTile tile = sim.board.availableLifeTiles.get(Utility.rndFromRange(0, sim.board.availableLifeTiles.size()-1));
             sim.activePlayer.lifeTiles.add(tile);
+            sim.board.availableLifeTiles.remove(tile);
             System.out.println("");
             System.out.println(sim.activePlayer.name+" collected a LIFE Tile worth $" + tile.value);
             return;
@@ -39,7 +61,7 @@ public class Receiver {
         else if(!sim.retiredPlayers.isEmpty()){
             ArrayList<Integer> indexes = new ArrayList<>();
             for(int i = 0; i < sim.retiredPlayers.size(); i++){
-                if(sim.retiredPlayers.get(i).retiredAtEstates) indexes.add(i);
+                if(sim.retiredPlayers.get(i).retiredAtEstates && !sim.retiredPlayers.get(i).lifeTiles.isEmpty()) indexes.add(i);
             }
             if(indexes.isEmpty()){
                 System.out.println("There are no more LIFE Tiles left and no people to steal from.");
@@ -50,7 +72,12 @@ public class Receiver {
             for(int i = 0; i<indexes.size(); i++){
                 System.out.println((i+1)+": "+sim.retiredPlayers.get(indexes.get(i)).name);
             }
-            int selection =
+            int selection = input.getListSelection(1, indexes.size());
+            Player selectedPlayer = sim.retiredPlayers.get(indexes.get(selection-1));
+            System.out.println(sim.activePlayer.name+" chose to steal a LIFE tile from "+selectedPlayer.name);
+            int random = Utility.rndFromRange(0, selectedPlayer.lifeTiles.size()-1);
+            sim.activePlayer.lifeTiles.add(selectedPlayer.lifeTiles.get(random));
+            selectedPlayer.lifeTiles.remove(random);
         }
     }
 
@@ -104,7 +131,8 @@ public class Receiver {
         getPaid();
     }
     public void payDayRaise(){
-        sim.activePlayer.career.numOfRaises++;
+        if(sim.activePlayer.career.salary * sim.activePlayer.career.numOfRaises < sim.activePlayer.career.maxSalary &&
+                sim.activePlayer.career.maxSalary != -1)  sim.activePlayer.career.numOfRaises++;
         getPaid();
     }
     /** Everything for choosing a career ************************************************************************************/
@@ -258,6 +286,17 @@ public class Receiver {
     }
 
      /******************************************************************************************/
+    public void startCollege(){
+        System.out.println(sim.activePlayer.name+" decided to attend college!");
+        sim.activePlayer.hasDegree = true;
+        for(int i = 0; i < 5; i++){
+            sim.activePlayer.takeLoan();
+        }
+    }
+    public void graduateCollege(){
+        System.out.println(sim.activePlayer.name+" has graduated college!");
+        chooseCareer();
+    }
     public void returnToSchool(){
         System.out.println(sim.activePlayer.name+" would you like to return to school? It costs $50,000.");
         System.out.println("Once you graduate, you will receive a degree if you do not already have one. This will make you eligible for college careers.");
@@ -579,7 +618,9 @@ public class Receiver {
         }
         sim.retiredPlayers.add(sim.activePlayer);
         sim.players.remove(sim.activePlayer);
-        if(sim.players.isEmpty()) calculateFinalScores();
+        if(sim.players.isEmpty()) {
+            calculateFinalScores();
+        }
 
     }
 
@@ -622,6 +663,8 @@ public class Receiver {
                 for(int j = 0; j < rankings.size(); j++){
                     if(player.money > rankings.get(j).money){
                         rankings.add(j, player);
+                        added = true;
+                        break;
                     }
                 }
                 if(!added) rankings.add(rankings.size(), player);
