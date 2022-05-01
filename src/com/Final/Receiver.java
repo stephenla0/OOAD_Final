@@ -308,11 +308,13 @@ public class Receiver {
         boolean selection = input.receiveBooleanSelection();
         if(!selection){
             System.out.println(sim.activePlayer.name+" declined to return to school.");
+            sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
             return;
         }
         System.out.println(sim.activePlayer.name+" decided to return to school for $50,000.");
         sim.activePlayer.pay(50000);
         printBalance(sim.activePlayer);
+        sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
     }
     public void graduateNightSchool(){
         System.out.println(sim.activePlayer.name+" graduated school and received a degree!");
@@ -350,6 +352,10 @@ public class Receiver {
         }
     }
     public void suePlayer(){
+        if(sim.players.size()<2){
+            System.out.println(sim.activePlayer.name+" can not sue as there are not enough players.");
+            return;
+        }
         System.out.println(sim.activePlayer.name+" can sue another player for $100,000");
         System.out.println(sim.activePlayer.name+" choose who you want to sue");
         ArrayList<Integer> active = new ArrayList<>();
@@ -781,6 +787,36 @@ public class Receiver {
                 System.out.print(player.deckCards.get(j).name+" ");
             }
             System.out.println("");
+        }
+    }
+
+    public void familyOrNormal(){
+        System.out.println(sim.activePlayer.name+" would you like to take the family path or normal path?");
+        System.out.println("1: Family");
+        System.out.println("2: Normal");
+        int selection = input.getListSelection(1,2);
+        if(selection==1){
+            System.out.println(sim.activePlayer.name+" chose the family path");
+            sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
+        }
+        else{
+            System.out.println(sim.activePlayer.name+" chose the normal path");
+            sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
+        }
+    }
+
+    public void safeOrRisky(){
+        System.out.println(sim.activePlayer.name+" would you like to take the safe path or risky path?");
+        System.out.println("1: Safe");
+        System.out.println("2: Risky");
+        int selection = input.getListSelection(1,2);
+        if(selection==1){
+            System.out.println(sim.activePlayer.name+" chose the safe path");
+            sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
+        }
+        else{
+            System.out.println(sim.activePlayer.name+" chose the risky path");
+            sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
         }
     }
 

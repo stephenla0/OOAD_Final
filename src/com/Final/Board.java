@@ -64,6 +64,7 @@ public class Board {
         checkLTI(spin);
         for(int i = 0; i < spin; i++){
             if(simulation.activePlayer.currentSpace.interruptMovement) simulation.activePlayer.currentSpace.card.executeCommand();
+            if(simulation.activePlayer.currentSpace.message != null && simulation.activePlayer.currentSpace.message.equals("Retire!"))break;
             if(simulation.activePlayer.currentSpace.left == null && simulation.activePlayer.currentSpace.right == null){
                 simulation.activePlayer.currentSpace = simulation.activePlayer.currentSpace.forward;
             }
@@ -249,6 +250,8 @@ public class Board {
         /*20*/boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );
         /*21*/boardSpaceCards.add( new BoardSpaceCard (new BuyLTICommand(simulation.receiver)) );
         /*22*/boardSpaceCards.add( new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver)) );
+        /*23*/boardSpaceCards.add( new BoardSpaceCard (new FamilyOrNormalCommand(simulation.receiver)) );
+        /*24*/boardSpaceCards.add( new BoardSpaceCard (new SafeOrRiskyCommand(simulation.receiver)) );
 
     }
 
@@ -277,6 +280,8 @@ public class Board {
             case 20: return new BoardSpaceCard (new RetireCommand(simulation.receiver));
             case 21: return new BoardSpaceCard (new BuyLTICommand(simulation.receiver));
             case 22: return new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver));
+            case 23: return new BoardSpaceCard (new FamilyOrNormalCommand(simulation.receiver));
+            case 24: return new BoardSpaceCard (new SafeOrRiskyCommand(simulation.receiver));
             default: return null;
         }
     }
@@ -429,7 +434,7 @@ public class Board {
         newSpace = createSpace(5, false, newSpace, 5000, "Summer School.");
 
         /* branch between family life or regular */
-        newSpace = createSpace(4, true, newSpace, 0, "STOP: Continue on the path of life or take the family path.");
+        newSpace = createSpace(23, true, newSpace, 0, "STOP: Continue on the path of life or take the family path.");
         prevBranchSpace=newSpace;
 
         /*family path*/
@@ -445,6 +450,7 @@ public class Board {
 
         /* regular*/
         newSpace = createSpace(5, false, newSpace, 30000, "Buy a home gym.");
+        prevBranchSpace.right = newSpace;
         newSpace = createSpace(7, false, newSpace, 0, "Pay Day with raise.");
         newSpace = createSpace(3, false, newSpace, 0, "Learn CPR.");
         newSpace = createSpace(5, false, newSpace, 30000, "Buy foreign sports car.");
@@ -470,7 +476,7 @@ public class Board {
         newSpace = createSpace(7, false, newSpace, 0, "Pay Day with raise.");
         newSpace = createSpace(8, false, newSpace, 0, "Tax refund.");
 
-        newSpace = createSpace(4, true, newSpace, 0, "STOP: Continue on safe route or take risky road.");
+        newSpace = createSpace(24, true, newSpace, 0, "STOP: Continue on safe route or take risky road.");
         prevBranchSpace = newSpace;
 
         /*risky*/
@@ -488,16 +494,33 @@ public class Board {
 
         /*safe*/
         newSpace = createSpace(5, false, newSpace, 25000, "Take family on a theme park vacation.");
+        prevBranchSpace.right=newSpace;
         newSpace = createSpace(3, false, newSpace, 0, "Visit the pyramids in Egypt.");
         newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
         newSpace = createSpace(3, false, newSpace, 100000, "Visit old soldiers home.");
-        newSpace = createSpace(5, false, newSpace, 0, "Redecorate your home.");
+        newSpace = createSpace(5, false, newSpace, 80000, "Redecorate your home.");
+        prevSpace.forward=newSpace;
 
-        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+
+        newSpace = createSpace(3, false, newSpace, 0, "You're a grandparent!");
         newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
-
-
-
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(5, false, newSpace, 125000, "Sponsor public arts exhibit.");
+        newSpace = createSpace(3, false, newSpace, 0, "Host family reunion!");
+        newSpace = createSpace(3, false, newSpace, 0, "You're a grandparent!.");
+        newSpace = createSpace(5, false, newSpace, 65000, "Hire a maid and butler service");
+        newSpace = createSpace(3, false, newSpace, 0, "Go hiking in the European Alps.");
+        newSpace = createSpace(7, false, newSpace, 0, "Pay Day with raise.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        newSpace = createSpace(3, false, newSpace, 0, "Visit the great wall of China.");
+        newSpace = createSpace(5, false, newSpace, 50000, "Have a life-saving operation.");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(5, false, newSpace, 50000, "Have family website designed.");
+        newSpace = createSpace(3, false, newSpace, 0, "You're a grandparent!");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(5, false, newSpace, 35000, "Host entertainment awards party.");
+        newSpace = createSpace(4, false, newSpace, 50000, "Pension!");
+        newSpace = createSpace(20, false, newSpace, 0, "Retire!");
     }
 
     void initializeTestLifeTiles(){

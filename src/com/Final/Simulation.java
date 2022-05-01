@@ -33,8 +33,8 @@ public class Simulation {
 
     void playIntroduction(){
         System.out.println("Welcome to The Game of Life!");
-        System.out.println("How many players are playing? (1-6)");
-        int playerCount = input.getListSelection(1,6);
+        System.out.println("How many players are playing? (2-6)");
+        int playerCount = input.getListSelection(2,6);
         System.out.println(playerCount+" players? Great! Let's get started.");
         for(int i = 0; i < playerCount; i++){
             System.out.println("Player "+(i+1)+", what is your name?");
