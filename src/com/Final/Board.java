@@ -63,24 +63,23 @@ public class Board {
     void move(int spin){
         checkLTI(spin);
         for(int i = 0; i < spin; i++){
-            BoardSpace currentSpace = simulation.activePlayer.currentSpace;
-            if(currentSpace.interruptMovement) currentSpace.card.executeCommand();
-            if(currentSpace.left == null && currentSpace.right == null){
+            if(simulation.activePlayer.currentSpace.interruptMovement) simulation.activePlayer.currentSpace.card.executeCommand();
+            if(simulation.activePlayer.currentSpace.left == null && simulation.activePlayer.currentSpace.right == null){
                 simulation.activePlayer.currentSpace = simulation.activePlayer.currentSpace.forward;
             }
             else{
                 System.out.println("Select which direction you want to go: (1: left, 2: forward, 3: right)");
                 ArrayList<Integer> restricted = new ArrayList<>();
-                if(currentSpace.left != null) {
-                    System.out.println("1: "+currentSpace.left.message);
+                if(simulation.activePlayer.currentSpace.left != null) {
+                    System.out.println("1: "+simulation.activePlayer.currentSpace.left.message);
                     restricted.add(1);
                 }
-                if(currentSpace.forward != null) {
-                    System.out.println("2: "+currentSpace.left.message);
+                if(simulation.activePlayer.currentSpace.forward != null) {
+                    System.out.println("2: "+simulation.activePlayer.currentSpace.left.message);
                     restricted.add(2);
                 }
-                if(currentSpace.right != null) {
-                    System.out.println("3: "+currentSpace.left.message);
+                if(simulation.activePlayer.currentSpace.right != null) {
+                    System.out.println("3: "+simulation.activePlayer.currentSpace.left.message);
                     restricted.add(3);
                 }
                 int selection = simulation.input.getListSelectionRestricted(1, 3, restricted);
@@ -248,6 +247,8 @@ public class Board {
         /*18*/boardSpaceCards.add( new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver)) );
         /*19*/boardSpaceCards.add( new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver)) );
         /*20*/boardSpaceCards.add( new BoardSpaceCard (new RetireCommand(simulation.receiver)) );
+        /*21*/boardSpaceCards.add( new BoardSpaceCard (new BuyLTICommand(simulation.receiver)) );
+        /*22*/boardSpaceCards.add( new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver)) );
 
     }
 
@@ -274,13 +275,16 @@ public class Board {
             case 18: return new BoardSpaceCard (new ReturnToSchoolCommand(simulation.receiver));
             case 19: return new BoardSpaceCard (new GraduateNightSchoolCommand(simulation.receiver));
             case 20: return new BoardSpaceCard (new RetireCommand(simulation.receiver));
+            case 21: return new BoardSpaceCard (new BuyLTICommand(simulation.receiver));
+            case 22: return new BoardSpaceCard (new CollectSTWcardCommand(simulation.receiver));
             default: return null;
         }
     }
 
-    BoardSpace createSpace(int num, boolean stop, BoardSpace prevSpace, int value){
+    BoardSpace createSpace(int num, boolean stop, BoardSpace prevSpace, int value, String message){
         BoardSpace newSpace = new BoardSpace(getCommand(num), stop);
         newSpace.value=value;
+        newSpace.message=message;
         boardSpaces.add(newSpace);
         prevSpace.forward = newSpace;
         prevSpace=newSpace;
@@ -288,6 +292,7 @@ public class Board {
     }
 
     void initializeBoard(){
+        /* Based off the actual board */
         BoardSpace newSpace = new BoardSpace(boardSpaceCards.get(0), true);
         BoardSpace prevSpace;
         BoardSpace prevBranchSpace;
@@ -300,16 +305,16 @@ public class Board {
         boardHead.left = newSpace;
         prevSpace=newSpace;
 
-        newSpace = createSpace(4, false, newSpace, 10000);
-        newSpace = createSpace(5, false, newSpace, 5000);
-        newSpace = createSpace(3, false, newSpace, 0);
-        newSpace = createSpace(4, false, newSpace, 14000);
-        newSpace = createSpace(3, false, newSpace, 0);
-        newSpace = createSpace(5, false, newSpace, 10000);
-        newSpace = createSpace(3, false, newSpace, 0);
-        newSpace = createSpace(4, false, newSpace, 20000);
-        newSpace = createSpace(3, false, newSpace, 0);
-        prevBranchSpace = createSpace(2, true, newSpace, 0);
+        newSpace = createSpace(4, false, newSpace, 20000, "Scholarship! Collect $20,000.");
+        newSpace = createSpace(5, false, newSpace, 5000, "School Supplies, Pay $5,000.");
+        newSpace = createSpace(3, false, newSpace, 0, "Make new friends for life.");
+        newSpace = createSpace(4, false, newSpace, 10000, "Part time job. Collect $10,000.");
+        newSpace = createSpace(3, false, newSpace, 0, "Semester in London.");
+        newSpace = createSpace(5, false, newSpace, 5000, "Spring Break in Florida. Pay $5,000.");
+        newSpace = createSpace(3, false, newSpace, 0, "Honor Roll!");
+        newSpace = createSpace(4, false, newSpace, 5000, "Receive a graduation gift. Collect $5,000.");
+        newSpace = createSpace(3, false, newSpace, 0, "Graduation Day!");
+        prevBranchSpace = createSpace(2, true, newSpace, 0, "STOP: College Career Choice");
 
         /*Career Path*/
         newSpace = new BoardSpace(getCommand(15), true);
@@ -317,24 +322,181 @@ public class Board {
         boardHead.right = newSpace;
         prevSpace=newSpace;
 
-        newSpace = createSpace(6, false, newSpace, 0);
-        newSpace = createSpace(5, false, newSpace, 5000);
-        newSpace = createSpace(4, false, newSpace, 10000);
-        newSpace = createSpace(6, false, newSpace, 0);
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day");
+        newSpace = createSpace(5, false, newSpace, 5000,"Rent apartment. Pay $5,000.");
+        newSpace = createSpace(4, false, newSpace, 10000,"Inheritance, Collect $10,000.");
+        newSpace = createSpace(6, false, newSpace, 0,"Pay Day");
         prevBranchSpace.forward=newSpace;
 
         /* continue straight */
-        newSpace = createSpace(3, false, newSpace, 0);
-        newSpace = createSpace(5, false, newSpace, 5000);
-        newSpace = createSpace(3, false, newSpace, 0);
-        newSpace = createSpace(4, false, newSpace, 10000);
-        newSpace = createSpace(5, false, newSpace, 15000);
-        newSpace = createSpace(3, false, newSpace, 0);
-        newSpace = createSpace(3, false, newSpace, 0);
-        newSpace = createSpace(6, false, newSpace, 0);
-        newSpace = createSpace(4, false, newSpace, 20000);
+        newSpace = createSpace(3, false, newSpace, 0,"Adopt a pet from animal shelter.");
+        newSpace = createSpace(22, false, newSpace, 0, "Take a share of the wealth card.");
+        newSpace = createSpace(3, false, newSpace, 0, "Get engaged.");
+        newSpace = createSpace(5, false, newSpace, 5000, "Snowboarding accident!");
+        newSpace = createSpace(4, false, newSpace, 10000, "Get early wedding gift.");
+        newSpace = createSpace(3, false, newSpace, 0, "Volunteer at a soup kitchen.");
+        newSpace = createSpace(3, false, newSpace, 0, "Engagement party.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day");
+        newSpace = createSpace(4, false, newSpace, 10000, "Win a race.");
 
-        newSpace = createSpace(17, true, newSpace, 0);
+        /* get married */
+        newSpace = createSpace(17, true, newSpace, 0, "Get married!");
+
+        /*continue straight */
+        newSpace = createSpace(5, false, newSpace, 20000, "Wedding reception.");
+        newSpace = createSpace(3, false, newSpace, 0, "Happy honeymoon!");
+        newSpace = createSpace(22, false, newSpace, 0, "Take a share of the wealth card.");
+        newSpace = createSpace(5, false, newSpace, 10000, "Car accident.");
+        newSpace = createSpace(5, false, newSpace, 20000, "Job relocation.");
+        newSpace = createSpace(7, false, newSpace, 0, "Pay Day with raise");
+        newSpace = createSpace(8, false, newSpace, 0, "Taxes due!");
+
+        /* buy starter home */
+        newSpace = createSpace(13, true, newSpace, 0, "STOP: Buy a starter home.");
+
+        /* continue straight */
+        newSpace = createSpace(4, false, newSpace, 50000, "Win the lottery!");
+        newSpace = createSpace(10, false, newSpace, 0, "Leave your job.");
+        newSpace = createSpace(5, false, newSpace, 5000, "Buy plasma tv.");
+        newSpace = createSpace(16, false, newSpace, 1, "Baby boy!");
+        newSpace = createSpace(5, false, newSpace, 5000, "Finish babies room.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day");
+        newSpace = createSpace(16, false, newSpace, 1, "Baby girl!");
+        newSpace = createSpace(3, false, newSpace, 0, "Vote.");
+        newSpace = createSpace(4, false, newSpace, 100000, "Win the ultimate idol tv show.");
+        newSpace = createSpace(16, false, newSpace, 2, "Twins!");
+        newSpace = createSpace(5, false, newSpace, 20000, "Get the best seats at the big game.");
+        newSpace = createSpace(3, false, newSpace, 0, "Attend hollywood movie premier.");
+        newSpace = createSpace(16, false, newSpace, 1, "Baby girl!");
+        newSpace = createSpace(22, false, newSpace, 0, "Take a share of the wealth card.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day");
+        newSpace = createSpace(3, false, newSpace, 0, "Learn sign language");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win!");
+        newSpace = createSpace(10, false, newSpace, 0, "Lose your job.");
+
+        /*return to school or continue path of life*/
+        newSpace = createSpace(18, true, newSpace, 0, "STOP: Pay $50000 to return to school or continue on the path of life.");
+        prevBranchSpace=newSpace;
+
+        /* go back to school */
+        newSpace = createSpace(5, false, newSpace, 5000, "Get a tutor.");
+        prevBranchSpace.forward=null;
+        prevBranchSpace.left=newSpace;
+        newSpace = createSpace(5, false, newSpace, 5000, "Buy books and supplies.");
+        newSpace = createSpace(4, false, newSpace, 20000, "Employer provides a scholarship.");
+        newSpace = createSpace(5, false, newSpace, 10000, "Upgrade your computer.");
+        newSpace = createSpace(3, false, newSpace, 0, "Join the honor society.");
+        newSpace = createSpace(5, false, newSpace, 5000, "Go to a summer seminar.");
+
+        newSpace = createSpace(19, true, newSpace, 0, "STOP: Choose new career or pay raise.");
+        prevSpace=newSpace;
+
+        /* continue on path of life */
+        newSpace = createSpace(5, false, newSpace, 40000, "House flooded.");
+        prevBranchSpace.right = newSpace;
+        newSpace = createSpace(3, false, newSpace, 0, "In-laws visit.");
+        newSpace = createSpace(7, false, newSpace, 0, "Pay Day with pay raise.");
+        newSpace = createSpace(3, false, newSpace, 0, "Coach children's sports team.");
+        newSpace = createSpace(16, false, newSpace, 2, "Adopt twins.");
+        newSpace = createSpace(10, false, newSpace, 0, "Lose your job.");
+        newSpace = createSpace(8, false, newSpace, 0, "Taxes due.");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        /* merge branches */
+        prevSpace.forward = newSpace;
+
+        newSpace = createSpace(3, false, newSpace, 0, "Run for congress.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(16, false, newSpace, 1, "Baby Boy!");
+        newSpace = createSpace(5, false, newSpace, 25000, "Take family cruise vacation.");
+        newSpace = createSpace(22, false, newSpace, 0, "Take a share of the wealth card.");
+        newSpace = createSpace(4, false, newSpace, 100000, "Win on a tv gameshow.");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(5, false, newSpace, 20000, "Art auction.");
+        newSpace = createSpace(7, false, newSpace, 0, "Pay Day with raise.");
+        newSpace = createSpace(3, false, newSpace, 0, "Visit the Grand Canyon.");
+        newSpace = createSpace(8, false, newSpace, 0, "Taxes Due.");
+        newSpace = createSpace(5, false, newSpace, 5000, "Sports camp for the kids.");
+        newSpace = createSpace(5, false, newSpace, 40000, "Donate to african orphans.");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        newSpace = createSpace(5, false, newSpace, 40000, "Buy an SUV.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(10, false, newSpace, 0, "Lose your job.");
+        newSpace = createSpace(22, false, newSpace, 0, "Take a share of the wealth card.");
+        newSpace = createSpace(5, false, newSpace, 100000, "TV dance show winner.");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(5, false, newSpace, 5000, "Summer School.");
+
+        /* branch between family life or regular */
+        newSpace = createSpace(4, true, newSpace, 0, "STOP: Continue on the path of life or take the family path.");
+        prevBranchSpace=newSpace;
+
+        /*family path*/
+        newSpace = createSpace(16, false, newSpace, 1, "Baby Girl.");
+        prevBranchSpace.forward=null;
+        prevBranchSpace.left = newSpace;
+        newSpace = createSpace(4, false, newSpace, 5000, "Open Daycare.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(16, false, newSpace, 1, "Baby Boy!");
+        newSpace = createSpace(5, false, newSpace, 5000, "Get family physicals.");
+        newSpace = createSpace(16, false, newSpace, 2, "Twins!");
+        prevSpace=newSpace;
+
+        /* regular*/
+        newSpace = createSpace(5, false, newSpace, 30000, "Buy a home gym.");
+        newSpace = createSpace(7, false, newSpace, 0, "Pay Day with raise.");
+        newSpace = createSpace(3, false, newSpace, 0, "Learn CPR.");
+        newSpace = createSpace(5, false, newSpace, 30000, "Buy foreign sports car.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        prevSpace.forward=newSpace;
+
+        newSpace = createSpace(4, false, newSpace, 500000, "Find buried treasure.");
+        newSpace = createSpace(16, false, newSpace, 1, "Baby boy.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(5, false, newSpace, 120000, "Buy lakeside cabin.");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(3, false, newSpace, 0, "Adopt a pet from the animal shelter.");
+        newSpace = createSpace(4, false, newSpace, 100000, "Win nobel prize.");
+
+        newSpace = createSpace(14, true, newSpace, 0, "STOP! Buy a better home.");
+
+        newSpace = createSpace(5, false, newSpace, 125000, "Tornado hits house.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(4, false, newSpace, 200000, "Write best selling book.");
+        newSpace = createSpace(5, false, newSpace, 50000, "College!");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(5, false, newSpace, 30000, "Buy a sailboat.");
+        newSpace = createSpace(7, false, newSpace, 0, "Pay Day with raise.");
+        newSpace = createSpace(8, false, newSpace, 0, "Tax refund.");
+
+        newSpace = createSpace(4, true, newSpace, 0, "STOP: Continue on safe route or take risky road.");
+        prevBranchSpace = newSpace;
+
+        /*risky*/
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        prevBranchSpace.forward= null;
+        prevBranchSpace.left = newSpace;
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        newSpace = createSpace(5, false, newSpace, 35000, "Sponsor sports tournament.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        newSpace = createSpace(11, false, newSpace, 100000, "Have cosmetic surgery.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+        prevSpace=newSpace;
+
+        /*safe*/
+        newSpace = createSpace(5, false, newSpace, 25000, "Take family on a theme park vacation.");
+        newSpace = createSpace(3, false, newSpace, 0, "Visit the pyramids in Egypt.");
+        newSpace = createSpace(6, false, newSpace, 0, "Pay Day.");
+        newSpace = createSpace(3, false, newSpace, 100000, "Visit old soldiers home.");
+        newSpace = createSpace(5, false, newSpace, 0, "Redecorate your home.");
+
+        newSpace = createSpace(12, false, newSpace, 0, "Lawsuit! Sue another player.");
+        newSpace = createSpace(11, false, newSpace, 0, "Spin To Win.");
+
+
 
     }
 

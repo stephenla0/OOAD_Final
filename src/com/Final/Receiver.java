@@ -36,11 +36,11 @@ public class Receiver {
         System.out.println("2: Attend college");
         int selection = input.getListSelection(1,2);
         if(selection == 1){
-            System.out.println(sim.activePlayer.name+" decided to start their career.");
+            System.out.println(sim.activePlayer.name+" decided to start their career!");
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
         }
         else{
-            System.out.println(sim.activePlayer.name+" decided to attend college.");
+            System.out.println(sim.activePlayer.name+" decided to attend college!");
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
         }
         sim.activePlayer.currentSpace.card.executeCommand();
@@ -116,8 +116,11 @@ public class Receiver {
             System.out.println(sim.activePlayer.name+" can not have a baby since you do not have a spouse");
             return;
         }
-        sim.activePlayer.children++;
-        System.out.println(sim.activePlayer.name+" and your spouse had a baby! "+sim.activePlayer.name+ " now have " + sim.activePlayer.children + " children.");
+        for(int i=0; i<sim.activePlayer.currentSpace.value; i++) {
+            sim.activePlayer.children++;
+            System.out.println(sim.activePlayer.name + " and your spouse had a baby! " + sim.activePlayer.name + " now have " + sim.activePlayer.children + " children.");
+        }
+        collectLifeTile();
     }
 
     private void getPaid(){
@@ -160,7 +163,7 @@ public class Receiver {
     }
 
     private void selectCareer(ArrayList<Career> careers){
-        System.out.println("Please enter your selection: ");
+        System.out.println("Please enter your career selection: ");
         for (int i = 0; i < careers.size(); i++) {
             System.out.println((i+1) + ": " + careers.get(i).name + " with a salary of $" + careers.get(i).salary
             + " and taxes of $" + careers.get(i).taxes);
@@ -288,7 +291,6 @@ public class Receiver {
 
      /******************************************************************************************/
     public void startCollege(){
-        System.out.println(sim.activePlayer.name+" decided to attend college!");
         sim.activePlayer.hasDegree = true;
         for(int i = 0; i < 5; i++){
             sim.activePlayer.takeLoan();

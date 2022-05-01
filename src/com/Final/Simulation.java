@@ -130,8 +130,8 @@ public class Simulation {
 
     void roll(){
         int moveCount = board.spinWheel();
+        System.out.println("You rolled a "+moveCount);
         board.move(moveCount);
-        activePlayer.currentSpace.card.executeCommand();
     }
     void viewBank(){
         System.out.println("");
@@ -215,7 +215,7 @@ public class Simulation {
         System.out.println(activePlayer.name+" Long-Term Investment Information:");
         System.out.println("Current investment number: "+activePlayer.LTI);
         System.out.println("Times investment has been rolled: "+activePlayer.LTIhits);
-        System.out.println("Money gained from investment: "+((5000*activePlayer.LTIhits)-10000));
+        System.out.println("Money gained from investment: $"+((5000*activePlayer.LTIhits)-10000));
         System.out.println("");
         displayTurnOptions();
     }

@@ -9,6 +9,7 @@ public class BoardSpace {
     boolean interruptMovement;
     int value;
     String message;
+    String pathMessage;
 
     BoardSpace(BoardSpaceCard card, boolean interruptMovement){
         forward = null;
