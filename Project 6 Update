@@ -1,0 +1,39 @@
+
+Project 6 
+
+
+Status Summary
+Name of Project: The Digital Game of Life
+Partners: Stephen Lasko & Ailish Skinner 
+
+
+Work Done
+Stephen Lasko - Worked through and is currently working on implementing the command pattern within the program. Additionally, is the current lead on the backend of the code. 
+
+Ailish Skinner - Working on implementing the MVC pattern. Additionally, before we had gone with a working version of the code, she also worked on creating her own backend as well. But Stephen’s version used the Command pattern in a much better and more efficient way. 
+
+
+Issues Encountered: The MVC pattern is trickier than expected and seems to be requiring a lot of debugging and learning a whole new set of Java. This is something that may change our plan of implementing a GUI interface and might just use a console instead. However, the mission goes on!!!! We are considering implementing an Decorating Pattern instead in order to successfully complete the 4 required patterns. 
+
+
+
+
+
+Pattern: 
+Command Pattern - The command pattern is implemented when using our functions that the tiles command. This is a very useful way to have the tiles and the commands that follow them. 
+Singleton Pattern - As we have one boardgame, this is how we are using and implementing the singleton pattern. This was a very easy way to implement and use the singleton pattern. 
+MVC Pattern - This will be implemented in as 
+Observer Pattern - The observer pattern is used to observe and log the game into a file. This will be important to keep track of the game and the user’s current status. 
+
+
+
+
+
+
+
+Plans for Next Iteration: The plan is to work on incorporating the MVC Pattern, the rest of the functions as commands,,as well as potentially implementing the Decorating pattern as well. This will be a backup instead of the MVC if the implementation goes south. Otherwise, the command line implementation will be what we go with. 
+
+
+UML DIAGRAM: 
+Notes: All parts of the Diagram have been partially implemented.
+
