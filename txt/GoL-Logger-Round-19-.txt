@@ -1,19 +1,4 @@
-*** Simulation of the Game Of Life ***
-
-It is now test1 turn
-test1, what would you like to do?
-1: Roll
-2: View Bank Account
-3: View Share The Wealth Cards
-4: View Life Tiles
-5: View Career
-6: View House
-7: View Family
-8: Purchase Long-Term Investment
-You rolled a 3
-test1 balance is $372690
-test1 got paid $40200
-test1 balance is $412890
+*** Simulation of the Game Of Life Round 19 ***
 
 It is now test2 turn
 test2, what would you like to do?
@@ -25,6 +10,21 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 4
+You rolled a 7
+test2 balance is $230406
+test2 got paid $30200
+test2 balance is $260606
 
-test2 collected a LIFE Tile worth $10000
+It is now test1 turn
+test1, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 5
+
+test1 collected a LIFE Tile worth $10000

@@ -1,4 +1,19 @@
-*** Simulation of the Game Of Life ***
+*** Simulation of the Game Of Life Round 12 ***
+
+It is now test2 turn
+test2, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 5
+test2 balance is $105200
+test2 got paid $30200
+test2 balance is $135400
 
 It is now test1 turn
 test1, what would you like to do?
@@ -11,21 +26,72 @@ test1, what would you like to do?
 7: View Family
 8: Purchase Long-Term Investment
 You rolled a 8
-test1 would you like to take the family path or normal path?
-1: Family
-2: Normal
-test1 chose the family path
+How much would test2 like to wager? ($0-$50000)
+test2 wagered $1
+test2 balance is $135399
+Would test2 like to use a Spin To Win boost card?
 
-It is now test2 turn
-test2, what would you like to do?
-1: Roll
-2: View Bank Account
-3: View Share The Wealth Cards
-4: View Life Tiles
-5: View Career
-6: View House
-7: View Family
-8: Purchase Long-Term Investment
-You rolled a 6
-test2 landed on a space worth a payment of $40000
-test2 balance is $102490
+Please enter your selection: (y/n)
+test2 used a 2 token boost card.
+Please select the number to place a token on
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+test2 placed a token on space 1
+Please select the number to place a token on
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+test2 placed a token on space 2
+How much would test1 like to wager? ($0-$50000)
+test1 wagered $1
+test1 balance is $69999
+Would test1 like to use a Spin To Win boost card?
+
+Please enter your selection: (y/n)
+test1 used a 2 token boost card.
+Please select the number to place a token on
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+test1 placed a token on space 1
+Please select the number to place a token on
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+test1 placed a token on space 2
+The number spun was 10
+test2 did not win
+test2 balance is $135399
+test1 did not win
+test1 balance is $69999

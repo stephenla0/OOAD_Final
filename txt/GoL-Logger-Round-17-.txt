@@ -1,20 +1,4 @@
-*** Simulation of the Game Of Life ***
-
-It is now test1 turn
-test1, what would you like to do?
-1: Roll
-2: View Bank Account
-3: View Share The Wealth Cards
-4: View Life Tiles
-5: View Career
-6: View House
-7: View Family
-8: Purchase Long-Term Investment
-You rolled a 4
-test1 would you like to take the safe path or risky path?
-1: Safe
-2: Risky
-test1 chose the safe path
+*** Simulation of the Game Of Life Round 17 ***
 
 It is now test2 turn
 test2, what would you like to do?
@@ -26,12 +10,12 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
+You rolled a 1
+test2 balance is $230407
+Can not afford any home options.
 
-test2 bank information:
-Money: $377690
-Loans: 10
-
-test2, what would you like to do?
+It is now test1 turn
+test1, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -40,10 +24,10 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 10
-test2 would you like to take the safe path or risky path?
+You rolled a 9
+test1 would you like to take the safe path or risky path?
 1: Safe
 2: Risky
-test2 chose the safe path
-test2 landed on a space worth a payment of $80000
-test2 balance is $297690
+test1 chose the risky path
+test1 landed on a space worth a payment of $80000
+test1 balance is $135007

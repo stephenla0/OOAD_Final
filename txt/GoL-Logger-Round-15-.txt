@@ -1,32 +1,4 @@
-*** Simulation of the Game Of Life ***
-
-It is now test1 turn
-test1, what would you like to do?
-1: Roll
-2: View Bank Account
-3: View Share The Wealth Cards
-4: View Life Tiles
-5: View Career
-6: View House
-7: View Family
-8: Purchase Long-Term Investment
-
-test1 bank information:
-Money: $252690
-Loans: 0
-
-test1, what would you like to do?
-1: Roll
-2: View Bank Account
-3: View Share The Wealth Cards
-4: View Life Tiles
-5: View Career
-6: View House
-7: View Family
-8: Purchase Long-Term Investment
-You rolled a 1
-test1 landed on a space worth $100000
-test1 balance is $352690
+*** Simulation of the Game Of Life Round 15 ***
 
 It is now test2 turn
 test2, what would you like to do?
@@ -38,14 +10,21 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 9
+You rolled a 2
+test2 and your spouse had a baby! test2 now have 3 children.
 
-Would test2 like to sell your house?
-Current House: Condo is worth $105000
+test2 collected a LIFE Tile worth $20000
 
-Please enter your selection: (y/n)
-
-test2 successfully sold Condo for $105000
-test2 balance is $277690
-test2 balance is $277690
-Can not afford any home options.
+It is now test1 turn
+test1, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 7
+test1 landed on a space worth $100000
+test1 balance is $170007

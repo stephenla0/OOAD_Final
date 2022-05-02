@@ -1,32 +1,4 @@
-*** Simulation of the Game Of Life ***
-
-It is now test1 turn
-test1, what would you like to do?
-1: Roll
-2: View Bank Account
-3: View Share The Wealth Cards
-4: View Life Tiles
-5: View Career
-6: View House
-7: View Family
-8: Purchase Long-Term Investment
-You rolled a 5
-test1 can sue another player for $100,000
-test1 choose who you want to sue
-2: test2
-test1 sued test2 for $100,000.
-test2 needed to take a loan.
-Current loans taken: 6
-test2 needed to take a loan.
-Current loans taken: 7
-test2 needed to take a loan.
-Current loans taken: 8
-test2 needed to take a loan.
-Current loans taken: 9
-test2 needed to take a loan.
-Current loans taken: 10
-test1 balance is $212700
-test2 balance is $102500
+*** Simulation of the Game Of Life Round 9 ***
 
 It is now test2 turn
 test2, what would you like to do?
@@ -38,5 +10,44 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
+You rolled a 4
+test2 would you like to return to school? It costs $50,000.
+Once you graduate, you will receive a degree if you do not already have one. This will make you eligible for college careers.
+Additionally, you may choose between a new career or a $20,000 raise.
+test2 balance is $85000
+
+Please enter your selection: (y/n)
+test2 decided to return to school for $50,000.
+test2 balance is $85000
+test2 landed on a space worth a payment of $10000
+test2 balance is $75000
+Would test2 like to use a Pay Card?
+
+Please enter your selection: (y/n)
+
+Please enter your selection: (y/n)
+test2 decided to use a pay card.
+Please select the player test2 wish to use your Pay card on.
+Available options are: 
+2:test1
+Please enter a valid selection.
+test2 used a Pay card on test1 and paid $5000 to the bank while test1 paid $5000
+test2 balance is $80000
+test1 balance is $70000
+
+It is now test1 turn
+test1, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
 You rolled a 1
-test2 collected a Share The Wealth Card.
+test1 graduated school and received a degree!
+test1 would you like a new college career or a $20,000 raise?
+1: New college career
+2: $20,000 raise
+com.Final.Player@2d8e6db6 chose a $20,000 raise!
