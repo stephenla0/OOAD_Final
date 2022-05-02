@@ -1,34 +1,36 @@
 *** Simulation of the Game Of Life Round 1 ***
 Welcome to The Game of Life!
 How many players are playing? (2-6)
+Please enter a valid selection.
 2 players? Great! Let's get started.
 Player 1, what is your name?
-Your name is test1? Great name!
+Your name is Stephen? Great name!
 Player 2, what is your name?
-Your name is test2? Great name!
+Your name is Hank? Great name!
 Now that you're all here, let's set the game up!
 Each of you will be getting three Share The Wealth Cards.
 Be sure to be strategic in using these, as these can easily turn the tides of the game!
 
-test1 received 3 Share The Wealth Cards.
-test1 collected a Share The Wealth Card.
-test1 collected a Share The Wealth Card.
-test1 collected a Share The Wealth Card.
-test2 received 3 Share The Wealth Cards.
-test2 collected a Share The Wealth Card.
-test2 collected a Share The Wealth Card.
-test2 collected a Share The Wealth Card.
+Stephen received 3 Share The Wealth Cards.
+Stephen collected a Share The Wealth Card.
+Stephen collected a Share The Wealth Card.
+Stephen collected a Share The Wealth Card.
+Hank received 3 Share The Wealth Cards.
+Hank collected a Share The Wealth Card.
+Hank collected a Share The Wealth Card.
+Hank collected a Share The Wealth Card.
 
 Now that you've all received your cards, let's determine the game order!
 The order has been shuffled, and will be as follows:
-1: test2
-2: test1
+1: Hank
+2: Stephen
 
 Lets begin the game!
 
 
-It is now test2 turn
-test2, what would you like to do?
+It is now Hank turn
+
+Hank, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -37,26 +39,61 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 4
 
-test2, would you like to attend college or start your career?
+Hank bank information:
+Money: $0
+Loans: 0
+
+
+Hank, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Hank Career Information:
+No Career Obtained.
+
+
+Hank, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 5
+
+Hank, would you like to attend college or start your career?
 Starting your career immediately will leave you with no debt; however, you will not have immediate access to higher paying careers.
 Attending college will provide you with immediate access to higher paying careers; however, you will need to take out $100,000 in loans.
 Which path would you like to take?
 1: Start career
 2: Attend college
-test2 decided to start their career!
+Hank decided to start their career!
 Please enter your career selection: 
-1: Entertainer with a salary of $50000 and taxes of $20000
-2: Salesperson with a salary of $20000 and taxes of $5000
-3: Hair Stylist with a salary of $30000 and taxes of $10000
-test2 chose Entertainer
-test2 balance is $0
-test2 got paid $50000
-test2 balance is $50000
+1: Athlete with a salary of $60000 and taxes of $25000
+2: Mechanic with a salary of $30000 and taxes of $10000
+3: Entertainer with a salary of $50000 and taxes of $20000
+Hank chose Athlete
+Adopt a pet from animal shelter.
 
-It is now test1 turn
-test1, what would you like to do?
+Hank collected a LIFE Tile worth $30000
+College Degree: No
+Career: Athlete
+Salary: 60000
+Maximum Salary: None
+Taxes: 25000
+Number of Raises: 0
+
+
+Hank, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -65,31 +102,41 @@ test1, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 8
+You rolled a 6
+Engagement party.
 
-test1, would you like to attend college or start your career?
+Hank collected a LIFE Tile worth $10000
+
+It is now Stephen turn
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 6
+
+Stephen, would you like to attend college or start your career?
 Starting your career immediately will leave you with no debt; however, you will not have immediate access to higher paying careers.
 Attending college will provide you with immediate access to higher paying careers; however, you will need to take out $100,000 in loans.
 Which path would you like to take?
 1: Start career
 2: Attend college
-test1 decided to attend college!
-test1 needed to take a loan.
+Stephen decided to attend college!
+Stephen needed to take a loan.
 Current loans taken: 1
-test1 needed to take a loan.
+Stephen needed to take a loan.
 Current loans taken: 2
-test1 needed to take a loan.
+Stephen needed to take a loan.
 Current loans taken: 3
-test1 needed to take a loan.
+Stephen needed to take a loan.
 Current loans taken: 4
-test1 needed to take a loan.
+Stephen needed to take a loan.
 Current loans taken: 5
-test1 landed on a space worth $5000
-test1 balance is $55000
-test2 would you like to use a Collect card?
-The space is worth $5000
-
-Please enter your selection: (y/n)
-
-Please enter your selection: (y/n)
-test2 can not use a Collect card for this space. The value must be greater than $5,000
+Spring Break in Florida. Pay $5,000.
+Stephen landed on a space worth a payment of $5000
+Stephen balance is $45000

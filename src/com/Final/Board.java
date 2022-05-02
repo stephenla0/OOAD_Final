@@ -63,7 +63,10 @@ public class Board implements LoggerWriter{
     void move(int spin){
         checkLTI(spin);
         for(int i = 0; i < spin; i++){
-            if(simulation.activePlayer.currentSpace.interruptMovement) simulation.activePlayer.currentSpace.card.executeCommand();
+            if(simulation.activePlayer.currentSpace.interruptMovement) {
+                if(simulation.activePlayer.currentSpace.message != null)simulation.loggerOutln(simulation.activePlayer.currentSpace.message,simulation.logger);
+                simulation.activePlayer.currentSpace.card.executeCommand();
+            }
             if(simulation.activePlayer.currentSpace.message != null && simulation.activePlayer.currentSpace.message.equals("Retire!"))break;
             if(simulation.activePlayer.currentSpace.left == null && simulation.activePlayer.currentSpace.right == null){
                 simulation.activePlayer.currentSpace = simulation.activePlayer.currentSpace.forward;
@@ -103,6 +106,7 @@ public class Board implements LoggerWriter{
                 }
             }
         }
+        if(simulation.activePlayer.currentSpace.message != null)simulation.loggerOutln(simulation.activePlayer.currentSpace.message,simulation.logger);
         simulation.activePlayer.currentSpace.card.executeCommand();
     }
 

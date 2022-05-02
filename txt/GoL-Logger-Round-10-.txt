@@ -1,27 +1,8 @@
 *** Simulation of the Game Of Life Round 10 ***
 
-It is now test2 turn
-test2, what would you like to do?
-1: Roll
-2: View Bank Account
-3: View Share The Wealth Cards
-4: View Life Tiles
-5: View Career
-6: View House
-7: View Family
-8: Purchase Long-Term Investment
-You rolled a 6
-test2 graduated school and received a degree!
-test2 would you like a new college career or a $20,000 raise?
-1: New college career
-2: $20,000 raise
-com.Final.Player@23ab930d chose a $20,000 raise!
-test2 balance is $80000
-test2 got paid $30200
-test2 balance is $110200
+It is now Hank turn
 
-It is now test1 turn
-test1, what would you like to do?
+Hank, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -30,18 +11,38 @@ test1, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 4
-test1 graduated school and received a degree!
-test1 would you like a new college career or a $20,000 raise?
-1: New college career
-2: $20,000 raise
-com.Final.Player@2d8e6db6 chose a new college career!
-test1 lost their job Doctor
+You rolled a 3
+Lose your job.
+Hank lost their job Accountant
 Please enter your career selection: 
 1: Veterinarian with a salary of $80000 and taxes of $35000
-2: Accountant with a salary of $70000 and taxes of $30000
-3: Teacher with a salary of $40000 and taxes of $15000
-test1 chose Veterinarian
-test1 and your spouse had a baby! test1 now have 2 children.
+2: Mechanic with a salary of $30000 and taxes of $10000
+3: Lawyer with a salary of $90000 and taxes of $40000
+Hank chose Veterinarian
 
-test1 collected a LIFE Tile worth $10000
+It is now Stephen turn
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: View Long-Term Investment
+You rolled a 6
+STOP: Pay $50000 to return to school or continue on the path of life.
+Stephen would you like to return to school? It costs $50,000.
+Once you graduate, you will receive a degree if you do not already have one. This will make you eligible for college careers.
+Additionally, you may choose between a new career or a $20,000 raise.
+Stephen balance is $44000
+
+Please enter your selection: (y/n)
+
+Please enter your selection: (y/n)
+Stephen declined to return to school.
+Pay Day with pay raise.
+Stephen balance is $44000
+Stephen got paid $50100
+Stephen balance is $94100

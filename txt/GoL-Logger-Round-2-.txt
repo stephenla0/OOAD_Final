@@ -1,7 +1,8 @@
 *** Simulation of the Game Of Life Round 2 ***
 
-It is now test2 turn
-test2, what would you like to do?
+It is now Hank turn
+
+Hank, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -10,12 +11,20 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 7
+You rolled a 4
+Get married!
+Hank got married!
 
-test2 collected a LIFE Tile worth $30000
+Hank collected a LIFE Tile worth $40000
+Hank spun a 4
+Hank got nothing from each player!
+Wedding reception.
+Hank landed on a space worth a payment of $20000
+Hank balance is $-20000
 
-It is now test1 turn
-test1, what would you like to do?
+It is now Stephen turn
+
+Stephen, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -24,13 +33,15 @@ test1, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 3
-test1 has graduated college!
+You rolled a 5
+STOP: College Career Choice
+Stephen has graduated college!
 Please enter your career selection: 
-1: Teacher with a salary of $40000 and taxes of $15000
-2: Doctor with a salary of $100000 and taxes of $45000
-3: Computer Designer with a salary of $50000 and taxes of $20000
-test1 chose Doctor
-test1 balance is $55000
-test1 got paid $100000
-test1 balance is $155000
+1: Computer Designer with a salary of $50000 and taxes of $20000
+2: Veterinarian with a salary of $80000 and taxes of $35000
+3: Teacher with a salary of $40000 and taxes of $15000
+Stephen chose Computer Designer
+Pay Day
+Stephen balance is $45000
+Stephen got paid $50000
+Stephen balance is $95000

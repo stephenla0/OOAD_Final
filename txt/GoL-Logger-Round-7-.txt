@@ -1,7 +1,8 @@
 *** Simulation of the Game Of Life Round 7 ***
 
-It is now test2 turn
-test2, what would you like to do?
+It is now Hank turn
+
+Hank, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -10,12 +11,15 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 6
+You rolled a 9
+Pay Day with raise.
+Hank balance is $60000
+Hank got paid $70100
+Hank balance is $130100
 
-test2 collected a LIFE Tile worth $20000
+It is now Stephen turn
 
-It is now test1 turn
-test1, what would you like to do?
+Stephen, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -24,6 +28,7 @@ test1, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 3
-
-test1 collected a LIFE Tile worth $50000
+You rolled a 2
+Job relocation.
+Stephen landed on a space worth a payment of $20000
+Stephen balance is $85000

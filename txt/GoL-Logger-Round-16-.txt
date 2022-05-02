@@ -1,7 +1,8 @@
 *** Simulation of the Game Of Life Round 16 ***
 
-It is now test2 turn
-test2, what would you like to do?
+It is now Hank turn
+
+Hank, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -10,12 +11,49 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 5
-test2 landed on a space worth $100000
-test2 balance is $230407
+You rolled a 1
+Spin To Win.
+How much would Hank like to wager? ($0-$50000)
+Hank wagered $1
+Hank balance is $95097
+Please select the number to place a token on
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
 
-It is now test1 turn
-test1, what would you like to do?
+Hank placed a token on space 1
+How much would Stephen like to wager? ($0-$50000)
+Stephen wagered $1
+Stephen balance is $124098
+Please select the number to place a token on
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+Stephen placed a token on space 1
+The number spun was 6
+Hank did not win
+Hank balance is $95097
+Stephen did not win
+Stephen balance is $124098
+
+It is now Stephen turn
+
+Stephen, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -23,18 +61,9 @@ test1, what would you like to do?
 5: View Career
 6: View House
 7: View Family
-8: Purchase Long-Term Investment
-You rolled a 9
+8: View Long-Term Investment
+You rolled a 1
+Baby Boy!
+Stephen and your spouse had a baby! Stephen now have 1 children.
 
-Would test1 like to sell your house?
-Current House: Mobile Home is worth $80000
-
-Please enter your selection: (y/n)
-
-test1 successfully sold Mobile Home for $80000
-test1 balance is $250007
-test1 balance is $250007
-Can not afford any home options.
-test1 balance is $250007
-test1 had to pay $35000 in taxes.
-test1 balance is $215007
+Stephen collected a LIFE Tile worth $30000

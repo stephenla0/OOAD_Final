@@ -1,7 +1,8 @@
 *** Simulation of the Game Of Life Round 9 ***
 
-It is now test2 turn
-test2, what would you like to do?
+It is now Hank turn
+
+Hank, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -10,33 +11,255 @@ test2, what would you like to do?
 6: View House
 7: View Family
 8: Purchase Long-Term Investment
-You rolled a 4
-test2 would you like to return to school? It costs $50,000.
-Once you graduate, you will receive a degree if you do not already have one. This will make you eligible for college careers.
-Additionally, you may choose between a new career or a $20,000 raise.
-test2 balance is $85000
-
-Please enter your selection: (y/n)
-test2 decided to return to school for $50,000.
-test2 balance is $85000
-test2 landed on a space worth a payment of $10000
-test2 balance is $75000
-Would test2 like to use a Pay Card?
+You rolled a 3
+Spin To Win.
+How much would Hank like to wager? ($0-$50000)
+Hank wagered $1
+Hank balance is $125099
+Would Hank like to use a Spin To Win boost card?
 
 Please enter your selection: (y/n)
 
 Please enter your selection: (y/n)
-test2 decided to use a pay card.
-Please select the player test2 wish to use your Pay card on.
+Hank used a 4 token boost card.
+Please select the number to place a token on
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+Hank placed a token on space 1
+Please select the number to place a token on
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+Hank placed a token on space 5
+Please select the number to place a token on
+2 
+3 
+4 
+6 
+7 
+8 
+9 
+10 
+
+Hank placed a token on space 8
+Please select the number to place a token on
+2 
+3 
+4 
+6 
+7 
+9 
+10 
+
+Hank placed a token on space 3
+How much would Stephen like to wager? ($0-$50000)
+Stephen wagered $1000
+Stephen balance is $54000
+Would Stephen like to use a Spin To Win boost card?
+
+Please enter your selection: (y/n)
+Stephen used a 4 token boost card.
+Please select the number to place a token on
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+Stephen placed a token on space 1
+Please select the number to place a token on
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10 
+
+Stephen placed a token on space 5
+Please select the number to place a token on
+2 
+3 
+4 
+6 
+7 
+8 
+9 
+10 
+
+Stephen placed a token on space 8
+Please select the number to place a token on
+2 
+3 
+4 
+6 
+7 
+9 
+10 
+
+Stephen placed a token on space 6
+The number spun was 10
+Hank did not win
+Hank balance is $125099
+Stephen did not win
+Stephen balance is $54000
+
+It is now Stephen turn
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Stephen bank information:
+Money: $54000
+Loans: 5
+
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Stephen Share The Wealth Cards:
+Collect Card 
+Collect Card 
+Collect Card 
+
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Stephen LIFE Tiles:
+$20000 
+$20000 
+$10000 
+
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Stephen Career Information:
+College Degree: Yes
+Career: Computer Designer
+Salary: 50000
+Maximum Salary: 80000
+Taxes: 20000
+Number of Raises: 0
+
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Stephen House Information:
+House: Mobile Home
+Starter House: Yes
+Purchase Price: 80000
+Sell Price: 80000
+
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Stephen Family Information:
+Married: Yes
+Children: 0
+
+
+Stephen, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+
+Would you like to purchase a Long-Term Investment for $10,000?
+Each time somebody rolls the number associated with your investment, you earn $5,000 from the bank!
+However, each number can only be bought once, so make sure to buy the number you want fast!
+
+Please enter your selection: (y/n)
+Please enter the number Stephen would like to purchase for $10,000.
 Available options are: 
-2:test1
-Please enter a valid selection.
-test2 used a Pay card on test1 and paid $5000 to the bank while test1 paid $5000
-test2 balance is $80000
-test1 balance is $70000
+1, 
+2, 
+3, 
+4, 
+5, 
+6, 
+7, 
+8, 
+9, 
+10
 
-It is now test1 turn
-test1, what would you like to do?
+Stephen has successfully purchased Long Term Investment 5 for $10,000.
+Stephen balance is $44000
+
+
+Stephen, what would you like to do?
 1: Roll
 2: View Bank Account
 3: View Share The Wealth Cards
@@ -44,10 +267,8 @@ test1, what would you like to do?
 5: View Career
 6: View House
 7: View Family
-8: Purchase Long-Term Investment
-You rolled a 1
-test1 graduated school and received a degree!
-test1 would you like a new college career or a $20,000 raise?
-1: New college career
-2: $20,000 raise
-com.Final.Player@2d8e6db6 chose a $20,000 raise!
+8: View Long-Term Investment
+You rolled a 10
+Learn sign language
+
+Stephen collected a LIFE Tile worth $50000

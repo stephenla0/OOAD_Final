@@ -101,6 +101,7 @@ public class Simulation implements LoggerWriter{
 
     void displayTurnOptions(){
         int selection;
+        loggerOutln("",logger);
         loggerOutln(activePlayer.name + ", what would you like to do?", logger);
         loggerOutln("1: Roll", logger);
         loggerOutln("2: View Bank Account", logger);
