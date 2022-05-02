@@ -11,9 +11,9 @@ How to run: Download code and compile Main.java! Interact with the command line 
 
 Patterns implemented within code: 
 
-1. Observer
-2. Decorator
-3. Command
-4. Singleton
+1. Observer - Observes logger and simulation
+2. Iterator - Logger
+3. Command - Different options 
+4. Singleton - Simulation
 
 
