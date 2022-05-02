@@ -45,7 +45,9 @@ public class receiveUserInteraction {
         selection = max + 1;
         while (selection < min || selection > max) {
             selection = input.nextInt();
+            if(selection < min || selection > max) System.out.println("Please enter a valid selection.");
         }
+        input.nextLine();
         return selection;
     }
 
@@ -66,5 +68,16 @@ public class receiveUserInteraction {
         if(selection_char == 'y') return true;
 
         return false;
+    }
+
+    String getName(){
+        String name = input.nextLine();
+        for(int i = 0; i < simulation.players.size(); i++){
+            if(name.equals(simulation.players.get(i).name)){
+                System.out.println("Sorry, but no duplicate names are allowed. Please enter a new name.");
+                getName();
+            }
+        }
+        return name;
     }
 }

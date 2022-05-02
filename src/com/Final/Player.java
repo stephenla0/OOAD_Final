@@ -14,6 +14,7 @@ public class Player {
     ArrayList<DeckCard> deckCards;
     int numOfLoans;
     int LTI;
+    int LTIhits;
     ArrayList<Integer> currentSTWtokens;
     boolean retiredAtEstates;
     BoardSpace currentSpace;
@@ -35,6 +36,7 @@ public class Player {
         currentSTWtokens = new ArrayList<>();
         retiredAtEstates = false;
         finalScore=0;
+        LTIhits = 0;
     }
 
     void setCurrentSpace(BoardSpace currentSpace){
