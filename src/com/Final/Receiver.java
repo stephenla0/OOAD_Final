@@ -1,11 +1,9 @@
 package com.Final;
 
-import java.lang.reflect.Array;
-import java.lang.Math;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Receiver {
+public class Receiver implements LoggerWriter{
     Simulation sim;
     Scanner scan;
     receiveUserInteraction input;
@@ -25,22 +23,22 @@ public class Receiver {
     }
 
     public void startFirstTurn(){
-        System.out.println("");
-        System.out.println(sim.activePlayer.name+", would you like to attend college or start your career?");
-        System.out.println("Starting your career immediately will leave you with no debt; however, you will not have immediate access to " +
-                "higher paying careers.");
-        System.out.println("Attending college will provide you with immediate access to higher paying careers; however, " +
-                "you will need to take out $100,000 in loans.");
-        System.out.println("Which path would you like to take?");
-        System.out.println("1: Start career");
-        System.out.println("2: Attend college");
+        loggerOutln("", sim.logger);
+        loggerOutln(sim.activePlayer.name+", would you like to attend college or start your career?", sim.logger);
+        loggerOutln("Starting your career immediately will leave you with no debt; however, you will not have immediate access to " +
+                "higher paying careers.", sim.logger);
+        loggerOutln("Attending college will provide you with immediate access to higher paying careers; however, " +
+                "you will need to take out $100,000 in loans.", sim.logger);
+        loggerOutln("Which path would you like to take?", sim.logger);
+        loggerOutln("1: Start career", sim.logger);
+        loggerOutln("2: Attend college", sim.logger);
         int selection = input.getListSelection(1,2);
         if(selection == 1){
-            System.out.println(sim.activePlayer.name+" decided to start their career!");
+            loggerOutln(sim.activePlayer.name+" decided to start their career!", sim.logger);
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
         }
         else{
-            System.out.println(sim.activePlayer.name+" decided to attend college!");
+            loggerOutln(sim.activePlayer.name+" decided to attend college!", sim.logger);
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
         }
         sim.activePlayer.currentSpace.card.executeCommand();
@@ -55,8 +53,8 @@ public class Receiver {
             LifeTile tile = sim.board.availableLifeTiles.get(Utility.rndFromRange(0, sim.board.availableLifeTiles.size()-1));
             sim.activePlayer.lifeTiles.add(tile);
             sim.board.availableLifeTiles.remove(tile);
-            System.out.println("");
-            System.out.println(sim.activePlayer.name+" collected a LIFE Tile worth $" + tile.value);
+            loggerOutln("", sim.logger);
+            loggerOutln(sim.activePlayer.name+" collected a LIFE Tile worth $" + tile.value, sim.logger);
             return;
         }
         else if(!sim.retiredPlayers.isEmpty()){
@@ -65,17 +63,17 @@ public class Receiver {
                 if(sim.retiredPlayers.get(i).retiredAtEstates && !sim.retiredPlayers.get(i).lifeTiles.isEmpty()) indexes.add(i);
             }
             if(indexes.isEmpty()){
-                System.out.println("There are no more LIFE Tiles left and no people to steal from.");
+                loggerOutln("There are no more LIFE Tiles left and no people to steal from.", sim.logger);
                 return;
             }
-            System.out.println("There are no more LIFE Tiles left but there are people to steal from.");
-            System.out.println("Please enter your selection to steal from.");
+            loggerOutln("There are no more LIFE Tiles left but there are people to steal from.", sim.logger);
+            loggerOutln("Please enter your selection to steal from.", sim.logger);
             for(int i = 0; i<indexes.size(); i++){
-                System.out.println((i+1)+": "+sim.retiredPlayers.get(indexes.get(i)).name);
+                loggerOutln((i+1)+": "+sim.retiredPlayers.get(indexes.get(i)).name, sim.logger);
             }
             int selection = input.getListSelection(1, indexes.size());
             Player selectedPlayer = sim.retiredPlayers.get(indexes.get(selection-1));
-            System.out.println(sim.activePlayer.name+" chose to steal a LIFE tile from "+selectedPlayer.name);
+            loggerOutln(sim.activePlayer.name+" chose to steal a LIFE tile from "+selectedPlayer.name, sim.logger);
             int random = Utility.rndFromRange(0, selectedPlayer.lifeTiles.size()-1);
             sim.activePlayer.lifeTiles.add(selectedPlayer.lifeTiles.get(random));
             selectedPlayer.lifeTiles.remove(random);
@@ -86,7 +84,7 @@ public class Receiver {
         printBalance(sim.activePlayer);
         int tax = sim.activePlayer.career.taxes;
         sim.activePlayer.money -= tax;
-        System.out.println(sim.activePlayer.name+" had to pay $" + tax + " in taxes.");
+        loggerOutln(sim.activePlayer.name+" had to pay $" + tax + " in taxes.", sim.logger);
         printBalance(sim.activePlayer);
     }
 
@@ -94,12 +92,12 @@ public class Receiver {
         printBalance(sim.activePlayer);
         int tax = sim.activePlayer.career.taxes;
         sim.activePlayer.money += tax;
-        System.out.println(sim.activePlayer.name+" got $" + tax + " in a tax refund.");
+        loggerOutln(sim.activePlayer.name+" got $" + tax + " in a tax refund.", sim.logger);
         printBalance(sim.activePlayer);
     }
 
     public void loseJob(){
-        System.out.println(sim.activePlayer.name+" lost their job "+sim.activePlayer.career.name);
+        loggerOutln(sim.activePlayer.name+" lost their job "+sim.activePlayer.career.name, sim.logger);
         sim.activePlayer.career.numOfRaises=0;
         if(sim.activePlayer.hasDegree){
             sim.board.availableCollegeCareers.add(sim.activePlayer.career);
@@ -113,12 +111,12 @@ public class Receiver {
 
     public void getBaby(){
         if(!sim.activePlayer.hasSpouse){
-            System.out.println(sim.activePlayer.name+" can not have a baby since you do not have a spouse");
+            loggerOutln(sim.activePlayer.name+" can not have a baby since you do not have a spouse", sim.logger);
             return;
         }
         for(int i=0; i<sim.activePlayer.currentSpace.value; i++) {
             sim.activePlayer.children++;
-            System.out.println(sim.activePlayer.name + " and your spouse had a baby! " + sim.activePlayer.name + " now have " + sim.activePlayer.children + " children.");
+            loggerOutln(sim.activePlayer.name + " and your spouse had a baby! " + sim.activePlayer.name + " now have " + sim.activePlayer.children + " children.", sim.logger);
         }
         collectLifeTile();
     }
@@ -127,7 +125,7 @@ public class Receiver {
         printBalance(sim.activePlayer);
         int pay = (sim.activePlayer.career.salary + (sim.activePlayer.career.numOfRaises * 100));
         sim.activePlayer.money += pay;
-        System.out.println(sim.activePlayer.name+" got paid $" + pay);
+        loggerOutln(sim.activePlayer.name+" got paid $" + pay, sim.logger);
         printBalance(sim.activePlayer);
     }
 
@@ -163,13 +161,13 @@ public class Receiver {
     }
 
     private void selectCareer(ArrayList<Career> careers){
-        System.out.println("Please enter your career selection: ");
+        loggerOutln("Please enter your career selection: ", sim.logger);
         for (int i = 0; i < careers.size(); i++) {
-            System.out.println((i+1) + ": " + careers.get(i).name + " with a salary of $" + careers.get(i).salary
-            + " and taxes of $" + careers.get(i).taxes);
+            loggerOutln((i+1) + ": " + careers.get(i).name + " with a salary of $" + careers.get(i).salary
+            + " and taxes of $" + careers.get(i).taxes, sim.logger);
         }
         Career selectedCareer = careers.get((input.getListSelection(1, 3)-1));
-        System.out.println(sim.activePlayer.name+" chose " + selectedCareer.name);
+        loggerOutln(sim.activePlayer.name+" chose " + selectedCareer.name, sim.logger);
         sim.activePlayer.career=selectedCareer;
         if(selectedCareer.needsCollege){
             sim.board.availableCollegeCareers.remove(selectedCareer);
@@ -219,24 +217,24 @@ public class Receiver {
     private void selectHouse(ArrayList<House> houseOptions, boolean canAfford){
         if(!canAfford){
             printBalance(sim.activePlayer);
-            System.out.println("Can not afford any home options.");
+            loggerOutln("Can not afford any home options.", sim.logger);
             return;
         }
         boolean purchased = false;
         House selectedHouse = null;
         while (!purchased) {
-            System.out.println("");
+            loggerOutln("", sim.logger);
             printBalance(sim.activePlayer);
-            System.out.println("Please enter your selection: ");
+            loggerOutln("Please enter your selection: ", sim.logger);
             for (int i = 0; i < houseOptions.size(); i++) {
-                System.out.println((i+1) + ": " + houseOptions.get(i).name + " for $" + houseOptions.get(i).purchasePrice);
+                loggerOutln((i+1) + ": " + houseOptions.get(i).name + " for $" + houseOptions.get(i).purchasePrice, sim.logger);
             }
             selectedHouse = houseOptions.get((input.getListSelection(1, 3)-1));
             purchased = purchase(selectedHouse.purchasePrice);
             if(!purchased){
-                System.out.println("Unable to afford selection. Please enter new selection.");
+                loggerOutln("Unable to afford selection. Please enter new selection.", sim.logger);
             }
-            System.out.println(sim.activePlayer.name+" successfully purchased " + selectedHouse.name + " for $" + selectedHouse.purchasePrice);
+            loggerOutln(sim.activePlayer.name+" successfully purchased " + selectedHouse.name + " for $" + selectedHouse.purchasePrice, sim.logger);
             printBalance(sim.activePlayer);
         }
         sim.activePlayer.house=selectedHouse;
@@ -250,9 +248,9 @@ public class Receiver {
 
     private boolean canBuyHouse(){
         if(sim.activePlayer.house != null){
-            System.out.println("");
-            System.out.println("Would "+sim.activePlayer.name+" like to sell your house?");
-            System.out.println("Current House: " + sim.activePlayer.house.name + " is worth $" + sim.activePlayer.house.sellPrice);
+            loggerOutln("", sim.logger);
+            loggerOutln("Would "+sim.activePlayer.name+" like to sell your house?", sim.logger);
+            loggerOutln("Current House: " + sim.activePlayer.house.name + " is worth $" + sim.activePlayer.house.sellPrice, sim.logger);
             boolean selection = input.receiveBooleanSelection();
             if(selection){
                 sell(sim.activePlayer.house.sellPrice);
@@ -262,14 +260,14 @@ public class Receiver {
                 else{
                     sim.board.availableHouses.add(sim.activePlayer.house);
                 }
-                System.out.println("");
-                System.out.println(sim.activePlayer.name+" successfully sold " + sim.activePlayer.house.name + " for $" + sim.activePlayer.house.sellPrice);
+                loggerOutln("", sim.logger);
+                loggerOutln(sim.activePlayer.name+" successfully sold " + sim.activePlayer.house.name + " for $" + sim.activePlayer.house.sellPrice, sim.logger);
                 printBalance(sim.activePlayer);
                 sim.activePlayer.house=null;
                 return true;
             }
-            System.out.println("");
-            System.out.println(sim.activePlayer.name+" declined to sell " + sim.activePlayer.house.name + " for $" + sim.activePlayer.house.sellPrice);
+            loggerOutln("", sim.logger);
+            loggerOutln(sim.activePlayer.name+" declined to sell " + sim.activePlayer.house.name + " for $" + sim.activePlayer.house.sellPrice, sim.logger);
             return false;
         }
         return true;
@@ -297,80 +295,80 @@ public class Receiver {
         }
     }
     public void graduateCollege(){
-        System.out.println(sim.activePlayer.name+" has graduated college!");
+        loggerOutln(sim.activePlayer.name+" has graduated college!", sim.logger);
         chooseCareer();
     }
     public void returnToSchool(){
-        System.out.println(sim.activePlayer.name+" would you like to return to school? It costs $50,000.");
-        System.out.println("Once you graduate, you will receive a degree if you do not already have one. This will make you eligible for college careers.");
-        System.out.println("Additionally, you may choose between a new career or a $20,000 raise.");
+        loggerOutln(sim.activePlayer.name+" would you like to return to school? It costs $50,000.", sim.logger);
+        loggerOutln("Once you graduate, you will receive a degree if you do not already have one. This will make you eligible for college careers.", sim.logger);
+        loggerOutln("Additionally, you may choose between a new career or a $20,000 raise.", sim.logger);
         printBalance(sim.activePlayer);
         boolean selection = input.receiveBooleanSelection();
         if(!selection){
-            System.out.println(sim.activePlayer.name+" declined to return to school.");
+            loggerOutln(sim.activePlayer.name+" declined to return to school.", sim.logger);
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
             return;
         }
-        System.out.println(sim.activePlayer.name+" decided to return to school for $50,000.");
+        loggerOutln(sim.activePlayer.name+" decided to return to school for $50,000.", sim.logger);
         sim.activePlayer.pay(50000);
         printBalance(sim.activePlayer);
         sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
     }
     public void graduateNightSchool(){
-        System.out.println(sim.activePlayer.name+" graduated school and received a degree!");
+        loggerOutln(sim.activePlayer.name+" graduated school and received a degree!", sim.logger);
         sim.activePlayer.hasDegree=true;
-        System.out.println(sim.activePlayer.name+" would you like a new college career or a $20,000 raise?");
-        System.out.println("1: New college career");
-        System.out.println("2: $20,000 raise");
+        loggerOutln(sim.activePlayer.name+" would you like a new college career or a $20,000 raise?", sim.logger);
+        loggerOutln("1: New college career", sim.logger);
+        loggerOutln("2: $20,000 raise", sim.logger);
         int selection = input.getListSelection(1,2);
         if(selection==1){
-            System.out.println(sim.activePlayer+" chose a new college career!");
+            loggerOutln(sim.activePlayer+" chose a new college career!", sim.logger);
             loseJob();
         }
         else{
-            System.out.println(sim.activePlayer+" chose a $20,000 raise!");
+            loggerOutln(sim.activePlayer+" chose a $20,000 raise!", sim.logger);
             sim.activePlayer.career.numOfRaises+=2;
         }
     }
     public void getMarried(){
 
-        System.out.println(sim.activePlayer.name+" got married!");
+        loggerOutln(sim.activePlayer.name+" got married!", sim.logger);
         collectLifeTile();
         sim.activePlayer.hasSpouse = true;
         int spin = Utility.rndFromRange(1, 10);
-        System.out.println(sim.activePlayer.name+" spun a "+spin);
+        loggerOutln(sim.activePlayer.name+" spun a "+spin, sim.logger);
         if(spin >= 8){
-            System.out.println(sim.activePlayer.name+" collect $10,000 from each player!");
+            loggerOutln(sim.activePlayer.name+" collect $10,000 from each player!", sim.logger);
             collectFromEachPlayer(10000);
         }
         else if (spin <= 7 && spin >= 5){
-            System.out.println(sim.activePlayer.name+" collect $5,000 from each player!");
+            loggerOutln(sim.activePlayer.name+" collect $5,000 from each player!", sim.logger);
             collectFromEachPlayer(5000);
         }
         else{
-            System.out.println(sim.activePlayer.name+" got nothing from each player!");
+            loggerOutln(sim.activePlayer.name+" got nothing from each player!", sim.logger);
         }
     }
     public void suePlayer(){
         if(sim.players.size()<2){
-            System.out.println(sim.activePlayer.name+" can not sue as there are not enough players.");
+            loggerOutln(sim.activePlayer.name+" can not sue as there are not enough players.", sim.logger);
             return;
         }
-        System.out.println(sim.activePlayer.name+" can sue another player for $100,000");
-        System.out.println(sim.activePlayer.name+" choose who you want to sue");
+        loggerOutln(sim.activePlayer.name+" can sue another player for $100,000", sim.logger);
+        loggerOutln(sim.activePlayer.name+" choose who you want to sue", sim.logger);
         ArrayList<Integer> active = new ArrayList<>();
         for(int i = 0; i < sim.players.size(); i++){
             if(sim.players.get(i).name == sim.activePlayer.name){
                 active.add(i+1);
             }
-            else System.out.println((i+1) +": " +sim.players.get(i).name);
+            else loggerOutln((i+1) +": " +sim.players.get(i).name, sim.logger);
         }
         int selection = input.getListSelectionRestricted(1, sim.players.size(), active)-1;
 
         boolean exempt = STWexemption(sim.activePlayer);
         if(exempt) return;
 
-        System.out.println(sim.activePlayer.name+" sued "+sim.players.get(selection).name+ " for $100,000.");
+        loggerOutln(sim.activePlayer.name+" sued "+sim.players.get(selection).name+ " for $100,000.", sim.logger);
         sim.players.get(selection).pay(100000);
         printBalance(sim.activePlayer);
         printBalance(sim.players.get(selection));
@@ -378,10 +376,10 @@ public class Receiver {
 
     public void collectSTWcard(){
         if(sim.board.availableDeckCards.size() == 0){
-            System.out.println(sim.activePlayer.name+" could not collect a Share The Wealth card as no more are available.");
+            loggerOutln(sim.activePlayer.name+" could not collect a Share The Wealth card as no more are available.", sim.logger);
             return;
         }
-        System.out.println(sim.activePlayer.name+" collected a Share The Wealth Card.");
+        loggerOutln(sim.activePlayer.name+" collected a Share The Wealth Card.", sim.logger);
         sim.activePlayer.deckCards.add(sim.board.availableDeckCards.get(0));
         sim.board.availableDeckCards.remove(0);
     }
@@ -389,7 +387,7 @@ public class Receiver {
     private void removeBoostCard(int boost){
         for(int i = 0; i < sim.cardUsePlayer.deckCards.size(); i++){
             if(sim.cardUsePlayer.deckCards.get(i).name.equals("Spin to Win (" +boost+ ")")){
-                System.out.println(sim.cardUsePlayer.name+" used a " +boost+ " token boost card.");
+                loggerOutln(sim.cardUsePlayer.name+" used a " +boost+ " token boost card.", sim.logger);
                 sim.board.availableDeckCards.add(sim.cardUsePlayer.deckCards.get(i));
                 sim.cardUsePlayer.deckCards.remove(i);
                 return;
@@ -411,10 +409,10 @@ public class Receiver {
         if(!hasTwoCard && !hasFourCard){
             return 0;
         }
-        System.out.println("Would " +sim.cardUsePlayer.name+ " like to use a Spin To Win boost card?");
+        loggerOutln("Would " +sim.cardUsePlayer.name+ " like to use a Spin To Win boost card?", sim.logger);
         boolean boost = input.receiveBooleanSelection();
         if(!boost){
-            System.out.println(sim.cardUsePlayer.name+" declined to use a boost card.");
+            loggerOutln(sim.cardUsePlayer.name+" declined to use a boost card.", sim.logger);
             return 0;
         }
         if (hasTwoCard && !hasFourCard){
@@ -426,9 +424,9 @@ public class Receiver {
             return 4;
         }
         else{
-            System.out.println("Please enter which boost card to use");
-            System.out.println("1: 2 tokens");
-            System.out.println("2: 4 tokens");
+            loggerOutln("Please enter which boost card to use", sim.logger);
+            loggerOutln("1: 2 tokens", sim.logger);
+            loggerOutln("2: 4 tokens", sim.logger);
             int select = input.getListSelection(1,2);
             if(select == 1){
                 removeBoostCard(2);
@@ -447,11 +445,11 @@ public class Receiver {
             sim.cardUsePlayer = sim.players.get(i);
             sim.cardUsePlayer.currentSTWtokens.clear();
 
-            System.out.println("How much would "+sim.cardUsePlayer.name+ " like to wager? ($0-$50000)");
+            loggerOutln("How much would "+sim.cardUsePlayer.name+ " like to wager? ($0-$50000)", sim.logger);
             int bet = input.getListSelection(0, 50000);
             bets.add(bet);
             sim.cardUsePlayer.money -= bet;
-            System.out.println(sim.cardUsePlayer.name+ " wagered $" + bet);
+            loggerOutln(sim.cardUsePlayer.name+ " wagered $" + bet, sim.logger);
             printBalance(sim.cardUsePlayer);
 
             int boost = STWboost();
@@ -460,23 +458,23 @@ public class Receiver {
                 tokens = tokens * boost;
             }
             for(int j = 0; j < tokens; j++){
-                System.out.println("Please select the number to place a token on");
+                loggerOutln("Please select the number to place a token on", sim.logger);
                 for(int k = 1; k <= 10; k++){
                     boolean inPicks = false;
                     for(int p = 0; p < sim.cardUsePlayer.currentSTWtokens.size(); p++){
                         if(k == sim.cardUsePlayer.currentSTWtokens.get(p)) inPicks = true;
                     }
-                    if(!inPicks) System.out.print(k+" ");
+                    if(!inPicks) loggerOut(k+" ", sim.logger);
                 }
-                System.out.println("");
+                loggerOutln("", sim.logger);
                 int selection = input.getListSelectionRestricted(1, 10, sim.cardUsePlayer.currentSTWtokens);
-                System.out.println(sim.cardUsePlayer.name+ " placed a token on space " + selection);
+                loggerOutln(sim.cardUsePlayer.name+ " placed a token on space " + selection, sim.logger);
                 sim.cardUsePlayer.currentSTWtokens.add(selection);
             }
         }
 
         int spin = sim.board.spinWheel();
-        System.out.println("The number spun was "+spin);
+        loggerOutln("The number spun was "+spin, sim.logger);
         for(int i = 0; i < sim.players.size(); i++){
             Player player = sim.players.get(i);
             boolean won = false;
@@ -484,11 +482,11 @@ public class Receiver {
                 if(spin == player.currentSTWtokens.get(j)) won = true;
             }
             if(!won){
-                System.out.println(player.name+" did not win");
+                loggerOutln(player.name+" did not win", sim.logger);
                 printBalance(player);
             }
             else{
-                System.out.println(player.name+" won! They receive $"+(10*bets.get(i)));
+                loggerOutln(player.name+" won! They receive $"+(10*bets.get(i)), sim.logger);
                 player.money += (10*bets.get(i));
                 printBalance(player);
             }
@@ -510,10 +508,10 @@ public class Receiver {
     private void STWcollect(){
         boolean check = checkSTWeligibleValue();
         if(!check){
-            System.out.println(sim.cardUsePlayer.name+" can not use a Collect card for this space. The value must be greater than $5,000");
+            loggerOutln(sim.cardUsePlayer.name+" can not use a Collect card for this space. The value must be greater than $5,000", sim.logger);
             return;
         }
-        System.out.println(sim.cardUsePlayer.name+" decided to use a collect card.");
+        loggerOutln(sim.cardUsePlayer.name+" decided to use a collect card.", sim.logger);
 
         boolean exempt = STWexemption(sim.activePlayer);
         if(exempt) return;
@@ -521,8 +519,8 @@ public class Receiver {
         int[] values = divideValue();
         sim.cardUsePlayer.money += values[0];
         sim.activePlayer.money -= values[1];
-        System.out.println(sim.cardUsePlayer.name+" used a Collect card on "+sim.activePlayer.name+" and collected $"+values[0]
-        +" from the space while "+sim.activePlayer.name+" only collected $"+values[1]);
+        loggerOutln(sim.cardUsePlayer.name+" used a Collect card on "+sim.activePlayer.name+" and collected $"+values[0]
+        +" from the space while "+sim.activePlayer.name+" only collected $"+values[1], sim.logger);
         printBalance(sim.cardUsePlayer);
         printBalance(sim.activePlayer);
 
@@ -537,16 +535,16 @@ public class Receiver {
     private void STWpay(){
         boolean check = checkSTWeligibleValue();
         if(!check){
-            System.out.println(sim.activePlayer.name+" can not use a Pay card for this space. The value must be greater than $5,000");
+            loggerOutln(sim.activePlayer.name+" can not use a Pay card for this space. The value must be greater than $5,000", sim.logger);
             return;
         }
         ArrayList<Integer> restricted = new ArrayList<>();
-        System.out.println(sim.activePlayer.name+" decided to use a pay card.");
-        System.out.println("Please select the player "+sim.activePlayer.name+" wish to use your Pay card on.");
-        System.out.println("Available options are: ");
+        loggerOutln(sim.activePlayer.name+" decided to use a pay card.", sim.logger);
+        loggerOutln("Please select the player "+sim.activePlayer.name+" wish to use your Pay card on.", sim.logger);
+        loggerOutln("Available options are: ", sim.logger);
         for(int i = 0; i < sim.players.size(); i++){
             if(sim.activePlayer != sim.players.get(i)) {
-                System.out.println((i+1)+":"+sim.players.get(i).name);
+                loggerOutln((i+1)+":"+sim.players.get(i).name, sim.logger);
             }
             else{
                 restricted.add(i+1);
@@ -561,8 +559,8 @@ public class Receiver {
         int[] values = divideValue();
         sim.activePlayer.money += values[0];
         selectedPlayer.money -= values[1];
-        System.out.println(sim.activePlayer.name+" used a Pay card on "+ selectedPlayer.name+" and paid $"+values[0]
-                +" to the bank while "+selectedPlayer.name+" paid $"+values[1]);
+        loggerOutln(sim.activePlayer.name+" used a Pay card on "+ selectedPlayer.name+" and paid $"+values[0]
+                +" to the bank while "+selectedPlayer.name+" paid $"+values[1], sim.logger);
         printBalance(sim.activePlayer);
         printBalance(selectedPlayer);
 
@@ -586,38 +584,38 @@ public class Receiver {
             }
         }
         if(!hasExemption) return false;
-        System.out.println(targetedPlayer.name+" would you like to use your exemption card?");
+        loggerOutln(targetedPlayer.name+" would you like to use your exemption card?", sim.logger);
         boolean selection = input.receiveBooleanSelection();
         if(!selection){
-            System.out.println(targetedPlayer.name+" declined to use their exemption card.");
+            loggerOutln(targetedPlayer.name+" declined to use their exemption card.", sim.logger);
             return false;
         }
-        System.out.println(targetedPlayer.name+" used their exemption card.");
+        loggerOutln(targetedPlayer.name+" used their exemption card.", sim.logger);
         sim.board.availableDeckCards.add(targetedPlayer.deckCards.get(index));
         targetedPlayer.deckCards.remove(index);
         return true;
     }
     public void retire(){
-        System.out.println(sim.activePlayer.name+" retired!");
+        loggerOutln(sim.activePlayer.name+" retired!", sim.logger);
         retiredSellHouse();
         if(sim.activePlayer.children>0){
-            System.out.println(sim.activePlayer.name+" received a $10,000 retirement gift from each of their children worth $"+(10000*sim.activePlayer.children));
+            loggerOutln(sim.activePlayer.name+" received a $10,000 retirement gift from each of their children worth $"+(10000*sim.activePlayer.children), sim.logger);
             sim.activePlayer.money+=10000;
             printBalance(sim.activePlayer);
         }
-        System.out.println(sim.activePlayer.name+" would you like to retire at Millionaire Estates or Countryside Acres?");
-        System.out.println("1: Millionaire Estates");
-        System.out.println("2: Countryside Acres");
+        loggerOutln(sim.activePlayer.name+" would you like to retire at Millionaire Estates or Countryside Acres?", sim.logger);
+        loggerOutln("1: Millionaire Estates", sim.logger);
+        loggerOutln("2: Countryside Acres", sim.logger);
         int selection = input.getListSelection(1,2);
         if(selection == 1){
-            System.out.println(sim.activePlayer.name+" chose to retire at Millionaire Estates");
-            System.out.println(sim.activePlayer.name+" will receive a LIFE tile, but their LIFE tiles may still be stolen.");
+            loggerOutln(sim.activePlayer.name+" chose to retire at Millionaire Estates", sim.logger);
+            loggerOutln(sim.activePlayer.name+" will receive a LIFE tile, but their LIFE tiles may still be stolen.", sim.logger);
             collectLifeTile();
             sim.activePlayer.retiredAtEstates=true;
         }
         else {
-            System.out.println(sim.activePlayer.name+" chose to retire at Countryside Acres");
-            System.out.println(sim.activePlayer.name+" will not receive a LIFE tile, but their LIFE tiles may not be stolen.");
+            loggerOutln(sim.activePlayer.name+" chose to retire at Countryside Acres", sim.logger);
+            loggerOutln(sim.activePlayer.name+" will not receive a LIFE tile, but their LIFE tiles may not be stolen.", sim.logger);
             sim.activePlayer.retiredAtEstates=false;
         }
         sim.retiredPlayers.add(sim.activePlayer);
@@ -630,7 +628,7 @@ public class Receiver {
 
     private void retiredSellHouse(){
         if(sim.activePlayer.house == null) return;
-        System.out.println(sim.activePlayer.name+" sold their "+sim.activePlayer.house.name+" for $"+sim.activePlayer.house.sellPrice);
+        loggerOutln(sim.activePlayer.name+" sold their "+sim.activePlayer.house.name+" for $"+sim.activePlayer.house.sellPrice, sim.logger);
         sim.activePlayer.money+=sim.activePlayer.house.sellPrice;
         printBalance(sim.activePlayer);
         if(sim.activePlayer.house.starterHouse){
@@ -649,18 +647,18 @@ public class Receiver {
             value += player.lifeTiles.get(i).value;
             count ++;
         }
-        System.out.println(player.name+" is cashing in "+count+" LIFE tiles worth a total of $"+value);
+        loggerOutln(player.name+" is cashing in "+count+" LIFE tiles worth a total of $"+value, sim.logger);
         player.money+=value;
     }
 
     private void calculateFinalScores(){
         ArrayList<Player> rankings = new ArrayList<>();
-        System.out.println("");
+        loggerOutln("", sim.logger);
         for(int i = 0; i < sim.retiredPlayers.size(); i++){
             Player player = sim.retiredPlayers.get(i);
             player.repayLoans();
             cashLifeTiles(player);
-            System.out.println("");
+            loggerOutln("", sim.logger);
             if(i==0)rankings.add(player);
             else{
                 boolean added=false;
@@ -674,26 +672,26 @@ public class Receiver {
                 if(!added) rankings.add(rankings.size(), player);
             }
         }
-        System.out.println("The final rankings are:");
+        loggerOutln("The final rankings are:", sim.logger);
         for(int i = 0; i < rankings.size(); i++){
-            System.out.println((i+1)+": "+rankings.get(i).name+" with a net worth of $"+rankings.get(i).money);
+            loggerOutln((i+1)+": "+rankings.get(i).name+" with a net worth of $"+rankings.get(i).money, sim.logger);
         }
     }
 
     private int printAvailableLTI(){
-        System.out.println("Please enter the number "+sim.activePlayer.name+" would like to purchase for $10,000.");
-        System.out.print("Available options are: ");
+        loggerOutln("Please enter the number "+sim.activePlayer.name+" would like to purchase for $10,000.", sim.logger);
+        loggerOut("Available options are: ", sim.logger);
         for(int i = 0; i < sim.board.availableLTI.size(); i++){
-            if(i+1 < sim.board.availableLTI.size()) {System.out.print(sim.board.availableLTI.get(i) + ", ");}
-            else{System.out.print(sim.board.availableLTI.get(i));}
+            if(i+1 < sim.board.availableLTI.size()) {loggerOut(sim.board.availableLTI.get(i) + ", ", sim.logger);}
+            else{loggerOut(sim.board.availableLTI.get(i).toString(), sim.logger);}
         }
-        System.out.println("");
+        loggerOutln("", sim.logger);
         return input.getListSelection(1, 10);
     }
 
     public void buyLTI(){
         if(sim.activePlayer.money < 10000){
-            System.out.println(sim.activePlayer.name+" can not buy a Long Term Investment. You must have at least $10,000.");
+            loggerOutln(sim.activePlayer.name+" can not buy a Long Term Investment. You must have at least $10,000.", sim.logger);
             printBalance(sim.activePlayer);
             return;
         }
@@ -706,14 +704,14 @@ public class Receiver {
                 if(test == selection) index = i;
             }
             if(index == -1){
-                System.out.println("That number is no longer available. Please select a new option.");
+                loggerOutln("That number is no longer available. Please select a new option.", sim.logger);
                 selection = printAvailableLTI();
             }
         }
         sim.activePlayer.LTI = selection;
         sim.board.availableLTI.remove(index);
         sim.activePlayer.money -= 10000;
-        System.out.println(sim.activePlayer.name+" has successfully purchased Long Term Investment " +selection + " for $10,000.");
+        loggerOutln(sim.activePlayer.name+" has successfully purchased Long Term Investment " +selection + " for $10,000.", sim.logger);
         printBalance(sim.activePlayer);
 
     }
@@ -722,14 +720,14 @@ public class Receiver {
         for(int i = 0; i < sim.players.size(); i++){
             Player player = sim.players.get(i);
             if(player != sim.activePlayer){
-                System.out.println(sim.activePlayer.name + " collected $" + money + " from " + player.name);
+                loggerOutln(sim.activePlayer.name + " collected $" + money + " from " + player.name, sim.logger);
                 player.pay(money);
             }
         }
     }
 
     private void printBalance (Player player){
-        System.out.println(player.name + " balance is $"+player.money);
+        loggerOutln(player.name + " balance is $"+player.money, sim.logger);
     }
 
     private Player getNextPlayer(int distFromActive){
@@ -740,7 +738,7 @@ public class Receiver {
     }
 
     public void collectMoney(){
-        System.out.println(sim.activePlayer.name+" landed on a space worth $"+sim.activePlayer.currentSpace.value);
+        loggerOutln(sim.activePlayer.name+" landed on a space worth $"+sim.activePlayer.currentSpace.value, sim.logger);
         sim.activePlayer.money+=sim.activePlayer.currentSpace.value;
         printBalance(sim.activePlayer);
         for(int i = 0; i < sim.players.size()-1; i++){
@@ -750,8 +748,8 @@ public class Receiver {
                 if(checkCardPlayer.deckCards.get(j).name == "Collect Card") hasCard=true;
             }
             if(hasCard){
-                System.out.println(checkCardPlayer.name+" would you like to use a Collect card?");
-                System.out.println("The space is worth $"+sim.activePlayer.currentSpace.value);
+                loggerOutln(checkCardPlayer.name+" would you like to use a Collect card?", sim.logger);
+                loggerOutln("The space is worth $"+sim.activePlayer.currentSpace.value, sim.logger);
                 boolean selection = input.receiveBooleanSelection();
 
                 if(selection){
@@ -763,7 +761,7 @@ public class Receiver {
     }
 
     public void payMoney(){
-        System.out.println(sim.activePlayer.name+" landed on a space worth a payment of $"+sim.activePlayer.currentSpace.value);
+        loggerOutln(sim.activePlayer.name+" landed on a space worth a payment of $"+sim.activePlayer.currentSpace.value, sim.logger);
         sim.activePlayer.money-=sim.activePlayer.currentSpace.value;
         printBalance(sim.activePlayer);
         boolean hasPayCard = false;
@@ -771,51 +769,51 @@ public class Receiver {
             if(sim.activePlayer.deckCards.get(i).name == "Pay Card") hasPayCard = true;
         }
         if(hasPayCard){
-            System.out.println("Would "+sim.activePlayer.name+" like to use a Pay Card?");
+            loggerOutln("Would "+sim.activePlayer.name+" like to use a Pay Card?", sim.logger);
             boolean selection = input.receiveBooleanSelection();
             if(selection) STWpay();
-            else System.out.println(sim.activePlayer.name+" declined to use a Pay Card.");
+            else loggerOutln(sim.activePlayer.name+" declined to use a Pay Card.", sim.logger);
         }
     }
 
     private void printCards(){
         for(int i = 0; i < sim.players.size(); i++){
             Player player = sim.players.get(i);
-            System.out.println("");
-            System.out.println(player.name);
+            loggerOutln("", sim.logger);
+            loggerOutln(player.name, sim.logger);
             for(int j = 0; j < player.deckCards.size(); j++){
-                System.out.print(player.deckCards.get(j).name+" ");
+                loggerOut(player.deckCards.get(j).name+" ", sim.logger);
             }
-            System.out.println("");
+            loggerOutln("", sim.logger);
         }
     }
 
     public void familyOrNormal(){
-        System.out.println(sim.activePlayer.name+" would you like to take the family path or normal path?");
-        System.out.println("1: Family");
-        System.out.println("2: Normal");
+        loggerOutln(sim.activePlayer.name+" would you like to take the family path or normal path?", sim.logger);
+        loggerOutln("1: Family", sim.logger);
+        loggerOutln("2: Normal", sim.logger);
         int selection = input.getListSelection(1,2);
         if(selection==1){
-            System.out.println(sim.activePlayer.name+" chose the family path");
+            loggerOutln(sim.activePlayer.name+" chose the family path", sim.logger);
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
         }
         else{
-            System.out.println(sim.activePlayer.name+" chose the normal path");
+            loggerOutln(sim.activePlayer.name+" chose the normal path", sim.logger);
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
         }
     }
 
     public void safeOrRisky(){
-        System.out.println(sim.activePlayer.name+" would you like to take the safe path or risky path?");
-        System.out.println("1: Safe");
-        System.out.println("2: Risky");
+        loggerOutln(sim.activePlayer.name+" would you like to take the safe path or risky path?", sim.logger);
+        loggerOutln("1: Safe", sim.logger);
+        loggerOutln("2: Risky", sim.logger);
         int selection = input.getListSelection(1,2);
         if(selection==1){
-            System.out.println(sim.activePlayer.name+" chose the safe path");
+            loggerOutln(sim.activePlayer.name+" chose the safe path", sim.logger);
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.right;
         }
         else{
-            System.out.println(sim.activePlayer.name+" chose the risky path");
+            loggerOutln(sim.activePlayer.name+" chose the risky path", sim.logger);
             sim.activePlayer.currentSpace=sim.activePlayer.currentSpace.left;
         }
     }

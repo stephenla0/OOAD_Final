@@ -2,7 +2,7 @@ package com.Final;
 import java.util.ArrayList;
 
 
-public class Player {
+public class Player implements LoggerWriter{
     String name;
     int money;
     boolean hasDegree;
@@ -19,8 +19,9 @@ public class Player {
     boolean retiredAtEstates;
     BoardSpace currentSpace;
     int finalScore;
+    Simulation simulation;
 
-    Player(String name, BoardSpace currentSpace){
+    Player(String name, BoardSpace currentSpace, Simulation simulation){
         this.name = name;
         money = 0;
         hasDegree = false;
@@ -37,6 +38,7 @@ public class Player {
         retiredAtEstates = false;
         finalScore=0;
         LTIhits = 0;
+        this.simulation = simulation;
     }
 
     void setCurrentSpace(BoardSpace currentSpace){
@@ -44,10 +46,10 @@ public class Player {
     }
 
     void takeLoan(){
-        System.out.println(name + " needed to take a loan.");
+        loggerOutln(name + " needed to take a loan.", simulation.logger);
         money += 10000;
         numOfLoans ++;
-        System.out.println("Current loans taken: " + numOfLoans);
+        loggerOutln("Current loans taken: " + numOfLoans, simulation.logger);
     }
 
     void pay(int money){
@@ -60,7 +62,7 @@ public class Player {
     }
 
     void repayLoans(){
-        System.out.println(name + " is repaying "+numOfLoans+" loans for $"+(numOfLoans*25000));
+        loggerOutln(name + " is repaying "+numOfLoans+" loans for $"+(numOfLoans*25000), simulation.logger);
         money-=(numOfLoans*25000);
     }
 }

@@ -1,0 +1,45 @@
+*** Simulation of the Game Of Life ***
+
+It is now test1 turn
+test1, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 6
+test1 balance is $352690
+Can not afford any home options.
+test1 can sue another player for $100,000
+test1 choose who you want to sue
+2: test2
+test1 sued test2 for $100,000.
+test1 balance is $352690
+test2 balance is $277690
+
+It is now test2 turn
+test2, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 3
+test2 balance is $277690
+Can not afford any home options.
+test2 landed on a space worth $200000
+test2 balance is $477690
+test1 would you like to use a Collect card?
+The space is worth $200000
+
+Please enter your selection: (y/n)
+test1 decided to use a collect card.
+test1 used a Collect card on test2 and collected $100000 from the space while test2 only collected $100000
+test1 balance is $452690
+test2 balance is $377690

@@ -4,7 +4,7 @@ import com.Final.Commands.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Board {
+public class Board implements LoggerWriter{
     Simulation simulation;
     ArrayList<BoardSpace> boardSpaces;
     ArrayList<BoardSpaceCard> boardSpaceCards;
@@ -53,7 +53,7 @@ public class Board {
     void checkLTI(int spin){
         for(int i=0; i < simulation.players.size(); i++){
             if(simulation.players.get(i).LTI == spin){
-                System.out.println(simulation.players.get(i)+" won $5,000 from their Long-Term Investment on space "+spin);
+                loggerOutln(simulation.players.get(i)+" won $5,000 from their Long-Term Investment on space "+spin, simulation.logger);
                 simulation.players.get(i).money+=5000;
                 simulation.players.get(i).LTIhits++;
             }
@@ -69,45 +69,41 @@ public class Board {
                 simulation.activePlayer.currentSpace = simulation.activePlayer.currentSpace.forward;
             }
             else{
-                System.out.println("Select which direction you want to go: (1: left, 2: forward, 3: right)");
+                loggerOutln("Select which direction you want to go: (1: left, 2: forward, 3: right)", simulation.logger);
                 ArrayList<Integer> restricted = new ArrayList<>();
                 if(simulation.activePlayer.currentSpace.left != null) {
-                    System.out.println("1: "+simulation.activePlayer.currentSpace.left.message);
+                    loggerOutln("1: "+simulation.activePlayer.currentSpace.left.message, simulation.logger);
                     restricted.add(1);
                 }
                 if(simulation.activePlayer.currentSpace.forward != null) {
-                    System.out.println("2: "+simulation.activePlayer.currentSpace.left.message);
+                    loggerOutln("2: "+simulation.activePlayer.currentSpace.left.message, simulation.logger);
                     restricted.add(2);
                 }
                 if(simulation.activePlayer.currentSpace.right != null) {
-                    System.out.println("3: "+simulation.activePlayer.currentSpace.left.message);
+                    loggerOutln("3: "+simulation.activePlayer.currentSpace.left.message, simulation.logger);
                     restricted.add(3);
                 }
                 int selection = simulation.input.getListSelectionRestricted(1, 3, restricted);
                 switch(selection){
                     case 1:{
                         simulation.activePlayer.currentSpace=simulation.activePlayer.currentSpace.left;
-                        System.out.println(simulation.activePlayer.name+ " chose to go left on the "+simulation.activePlayer.currentSpace.message);
+                        loggerOutln(simulation.activePlayer.name+ " chose to go left on the "+simulation.activePlayer.currentSpace.message, simulation.logger);
                         break;
                     }
                     case 2:{
                         simulation.activePlayer.currentSpace=simulation.activePlayer.currentSpace.forward;
-                        System.out.println(simulation.activePlayer.name+ " chose to go forward on the "+simulation.activePlayer.currentSpace.message);
+                        loggerOutln(simulation.activePlayer.name+ " chose to go forward on the "+simulation.activePlayer.currentSpace.message, simulation.logger);
                         break;
                     }
                     case 3:{
                         simulation.activePlayer.currentSpace=simulation.activePlayer.currentSpace.right;
-                        System.out.println(simulation.activePlayer.name+ " chose to go right on the "+simulation.activePlayer.currentSpace.message);
+                        loggerOutln(simulation.activePlayer.name+ " chose to go right on the "+simulation.activePlayer.currentSpace.message, simulation.logger);
                         break;
                     }
                 }
             }
         }
         simulation.activePlayer.currentSpace.card.executeCommand();
-    }
-
-    String selectPath(){
-        return null;
     }
 
     void initializeLTI(){

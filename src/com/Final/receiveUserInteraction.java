@@ -3,7 +3,7 @@ package com.Final;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class receiveUserInteraction {
+public class receiveUserInteraction implements LoggerWriter{
     Scanner input;
     Simulation simulation;
     int selection;
@@ -36,7 +36,7 @@ public class receiveUserInteraction {
                     selected = true;
                 }
             }
-            if(!selected) System.out.println("Please enter a valid selection.");
+            if(!selected) loggerOutln("Please enter a valid selection.", simulation.logger);
         }
         return selection;
     }
@@ -45,15 +45,15 @@ public class receiveUserInteraction {
         selection = max + 1;
         while (selection < min || selection > max) {
             selection = input.nextInt();
-            if(selection < min || selection > max) System.out.println("Please enter a valid selection.");
+            if(selection < min || selection > max) loggerOutln("Please enter a valid selection.", simulation.logger);
         }
         input.nextLine();
         return selection;
     }
 
     void printBooleanSelection(){
-        System.out.println("");
-        System.out.println("Please enter your selection: (y/n)");
+        loggerOutln("", simulation.logger);
+        loggerOutln("Please enter your selection: (y/n)", simulation.logger);
     }
 
     boolean receiveBooleanSelection(){
@@ -74,7 +74,7 @@ public class receiveUserInteraction {
         String name = input.nextLine();
         for(int i = 0; i < simulation.players.size(); i++){
             if(name.equals(simulation.players.get(i).name)){
-                System.out.println("Sorry, but no duplicate names are allowed. Please enter a new name.");
+                loggerOutln("Sorry, but no duplicate names are allowed. Please enter a new name.", simulation.logger);
                 getName();
             }
         }

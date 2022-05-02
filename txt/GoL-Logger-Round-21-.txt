@@ -1,0 +1,37 @@
+*** Simulation of the Game Of Life ***
+
+It is now test1 turn
+test1, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 5
+
+test1 collected a LIFE Tile worth $40000
+
+It is now test2 turn
+test2, what would you like to do?
+1: Roll
+2: View Bank Account
+3: View Share The Wealth Cards
+4: View Life Tiles
+5: View Career
+6: View House
+7: View Family
+8: Purchase Long-Term Investment
+You rolled a 4
+test2 retired!
+test2 received a $10,000 retirement gift from each of their children worth $20000
+test2 balance is $307690
+test2 would you like to retire at Millionaire Estates or Countryside Acres?
+1: Millionaire Estates
+2: Countryside Acres
+test2 chose to retire at Millionaire Estates
+test2 will receive a LIFE tile, but their LIFE tiles may still be stolen.
+
+test2 collected a LIFE Tile worth $20000

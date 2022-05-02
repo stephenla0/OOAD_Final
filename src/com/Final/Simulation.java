@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
 
-public class Simulation {
+public class Simulation implements LoggerWriter{
     Board board;
     Receiver receiver;
     receiveUserInteraction input;
@@ -16,6 +16,7 @@ public class Simulation {
     Player cardUsePlayer;
     private int playerIndex;
     int round;
+    Logger logger;
 
     Simulation(Scanner scan){
         input = new receiveUserInteraction(scan, this);
@@ -27,57 +28,59 @@ public class Simulation {
         activePlayer = null;
         cardUsePlayer = null;
         round = 1;
+        logger=logger.getInstance();
+        logger.startLog(round);
 
         //initializeTestPlayers(players);
     }
 
     void playIntroduction(){
-        System.out.println("Welcome to The Game of Life!");
-        System.out.println("How many players are playing? (2-6)");
+        loggerOutln("Welcome to The Game of Life!", logger);
+        loggerOutln("How many players are playing? (2-6)", logger);
         int playerCount = input.getListSelection(2,6);
-        System.out.println(playerCount+" players? Great! Let's get started.");
+        loggerOutln(playerCount+" players? Great! Let's get started.", logger);
         for(int i = 0; i < playerCount; i++){
-            System.out.println("Player "+(i+1)+", what is your name?");
+            loggerOutln("Player "+(i+1)+", what is your name?", logger);
             String name = input.getName();
-            System.out.println("Your name is "+name+"? Great name!");
-            players.add(new Player(name, board.boardHead));
+            loggerOutln("Your name is "+name+"? Great name!", logger);
+            players.add(new Player(name, board.boardHead, this));
         }
-        System.out.println("Now that you're all here, let's set the game up!");
-        System.out.println("Each of you will be getting three Share The Wealth Cards.");
-        System.out.println("Be sure to be strategic in using these, as these can easily turn the tides of the game!");
-        System.out.println("");
+        loggerOutln("Now that you're all here, let's set the game up!", logger);
+        loggerOutln("Each of you will be getting three Share The Wealth Cards.", logger);
+        loggerOutln("Be sure to be strategic in using these, as these can easily turn the tides of the game!", logger);
+        loggerOutln("", logger);
         BoardSpace tempSpace = new BoardSpace(new BoardSpaceCard(new CollectSTWcardCommand(receiver)), false);
         for(int i = 0; i < players.size(); i++){
             activePlayer=players.get(i);
-            System.out.println(players.get(i).name+" received 3 Share The Wealth Cards.");
+            loggerOutln(players.get(i).name+" received 3 Share The Wealth Cards.", logger);
             for(int j = 0; j < 3; j++){
                 tempSpace.card.executeCommand();
             }
         }
         tempSpace = null;
-        System.out.println("");
-        System.out.println("Now that you've all received your cards, let's determine the game order!");
+        loggerOutln("", logger);
+        loggerOutln("Now that you've all received your cards, let's determine the game order!", logger);
         Collections.shuffle(players);
-        System.out.println("The order has been shuffled, and will be as follows:");
+        loggerOutln("The order has been shuffled, and will be as follows:", logger);
         for(int i = 0; i < players.size(); i++){
-            System.out.println((i+1)+": "+players.get(i).name);
+            loggerOutln((i+1)+": "+players.get(i).name, logger);
         }
-        System.out.println("");
-        System.out.println("Lets begin the game!");
-        System.out.println("");
+        loggerOutln("", logger);
+        loggerOutln("Lets begin the game!", logger);
+        loggerOutln("", logger);
     }
 
     void initializeTestPlayers(ArrayList<Player> list){
-        list.add(new Player("Player 1", board.boardHead));
-        list.add(new Player("Player 2", board.boardHead));
+        list.add(new Player("Player 1", board.boardHead, this));
+        list.add(new Player("Player 2", board.boardHead, this));
 
         list.get(0).money = 100000;
         list.get(1).money = 100000;
         list.get(0).hasDegree = true;
 
-        board.initializeTestBoardCards();
+        //board.initializeTestBoardCards();
 
-        retiredPlayers.add(new Player("Player 3", board.boardHead));
+        retiredPlayers.add(new Player("Player 3", board.boardHead, this));
         retiredPlayers.get(0).lifeTiles.add(board.availableLifeTiles.get(0));
         retiredPlayers.get(0).retiredAtEstates=true;
         board.availableLifeTiles.remove(0);
@@ -98,19 +101,19 @@ public class Simulation {
 
     void displayTurnOptions(){
         int selection;
-        System.out.println(activePlayer.name + ", what would you like to do?");
-        System.out.println("1: Roll");
-        System.out.println("2: View Bank Account");
-        System.out.println("3: View Share The Wealth Cards");
-        System.out.println("4: View Life Tiles");
-        System.out.println("5: View Career");
-        System.out.println("6: View House");
-        System.out.println("7: View Family");
+        loggerOutln(activePlayer.name + ", what would you like to do?", logger);
+        loggerOutln("1: Roll", logger);
+        loggerOutln("2: View Bank Account", logger);
+        loggerOutln("3: View Share The Wealth Cards", logger);
+        loggerOutln("4: View Life Tiles", logger);
+        loggerOutln("5: View Career", logger);
+        loggerOutln("6: View House", logger);
+        loggerOutln("7: View Family", logger);
         if(activePlayer.LTI==0) {
-            System.out.println("8: Purchase Long-Term Investment");
+            loggerOutln("8: Purchase Long-Term Investment", logger);
         }
         else{
-            System.out.println("8: View Long-Term Investment");
+            loggerOutln("8: View Long-Term Investment", logger);
         }
             selection = input.getListSelection(1,8);
         switch(selection){
@@ -130,101 +133,101 @@ public class Simulation {
 
     void roll(){
         int moveCount = board.spinWheel();
-        System.out.println("You rolled a "+moveCount);
+        loggerOutln("You rolled a "+moveCount, logger);
         board.move(moveCount);
     }
     void viewBank(){
-        System.out.println("");
-        System.out.println(activePlayer.name+" bank information:");
-        System.out.println("Money: $"+activePlayer.money);
-        System.out.println("Loans: "+activePlayer.numOfLoans);
-        System.out.println("");
+        loggerOutln("", logger);
+        loggerOutln(activePlayer.name+" bank information:", logger);
+        loggerOutln("Money: $"+activePlayer.money, logger);
+        loggerOutln("Loans: "+activePlayer.numOfLoans, logger);
+        loggerOutln("", logger);
         displayTurnOptions();
     }
     void viewSTW(){
-        System.out.println("");
-        System.out.println(activePlayer.name+" Share The Wealth Cards:");
-        if(activePlayer.deckCards.isEmpty()) System.out.println("No Cards Obtained.");
+        loggerOutln("", logger);
+        loggerOutln(activePlayer.name+" Share The Wealth Cards:", logger);
+        if(activePlayer.deckCards.isEmpty()) loggerOutln("No Cards Obtained.", logger);
         else {
             for (int i = 0; i < activePlayer.deckCards.size(); i++) {
-                System.out.println(activePlayer.deckCards.get(i).name + " ");
+                loggerOutln(activePlayer.deckCards.get(i).name + " ", logger);
             }
         }
-        System.out.println("");
+        loggerOutln("", logger);
         displayTurnOptions();
     }
     void viewLifeTiles(){
-        System.out.println("");
-        System.out.println(activePlayer.name+" LIFE Tiles:");
-        if(activePlayer.lifeTiles.isEmpty()) System.out.println("No LIFE Tiles Obtained.");
+        loggerOutln("", logger);
+        loggerOutln(activePlayer.name+" LIFE Tiles:", logger);
+        if(activePlayer.lifeTiles.isEmpty()) loggerOutln("No LIFE Tiles Obtained.", logger);
         else {
             for (int i = 0; i < activePlayer.lifeTiles.size(); i++) {
-                System.out.println("$" + activePlayer.lifeTiles.get(i).value + " ");
+                loggerOutln("$" + activePlayer.lifeTiles.get(i).value + " ", logger);
             }
         }
-        System.out.println("");
+        loggerOutln("", logger);
         displayTurnOptions();
     }
     void viewCareer(){
-        System.out.println("");
-        System.out.println(activePlayer.name+" Career Information:");
+        loggerOutln("", logger);
+        loggerOutln(activePlayer.name+" Career Information:", logger);
         if(activePlayer.career==null){
-            System.out.println("No Career Obtained.");
-            System.out.println("");
+            loggerOutln("No Career Obtained.", logger);
+            loggerOutln("", logger);
             displayTurnOptions();
         }
-        if(activePlayer.career.needsCollege)System.out.println("College Degree: Yes");
-        else System.out.println("College Degree: No");
-        System.out.println("Career: "+activePlayer.career.name);
-        System.out.println("Salary: "+activePlayer.career.salary);
-        if(activePlayer.career.maxSalary==-1)System.out.println("Maximum Salary: None");
-        else System.out.println("Maximum Salary: "+activePlayer.career.maxSalary);
-        System.out.println("Taxes: "+activePlayer.career.taxes);
-        System.out.println("Number of Raises: "+activePlayer.career.numOfRaises);
-        System.out.println("");
+        if(activePlayer.career.needsCollege)loggerOutln("College Degree: Yes", logger);
+        else loggerOutln("College Degree: No", logger);
+        loggerOutln("Career: "+activePlayer.career.name, logger);
+        loggerOutln("Salary: "+activePlayer.career.salary, logger);
+        if(activePlayer.career.maxSalary==-1)loggerOutln("Maximum Salary: None", logger);
+        else loggerOutln("Maximum Salary: "+activePlayer.career.maxSalary, logger);
+        loggerOutln("Taxes: "+activePlayer.career.taxes, logger);
+        loggerOutln("Number of Raises: "+activePlayer.career.numOfRaises, logger);
+        loggerOutln("", logger);
         displayTurnOptions();
     }
     void viewHouse(){
-        System.out.println("");
-        System.out.println(activePlayer.name+" House Information:");
+        loggerOutln("", logger);
+        loggerOutln(activePlayer.name+" House Information:", logger);
         if(activePlayer.career==null){
-            System.out.println("No Career Obtained.");
-            System.out.println("");
+            loggerOutln("No Career Obtained.", logger);
+            loggerOutln("", logger);
             displayTurnOptions();
         }
-        System.out.println("House: "+activePlayer.house.name);
-        if(activePlayer.house.starterHouse)System.out.println("Starter House: Yes");
-        else System.out.println("Starter House: No");
-        System.out.println("Purchase Price: "+activePlayer.house.purchasePrice);
-        System.out.println("Sell Price: "+activePlayer.house.sellPrice);
-        System.out.println("");
+        loggerOutln("House: "+activePlayer.house.name, logger);
+        if(activePlayer.house.starterHouse)loggerOutln("Starter House: Yes", logger);
+        else loggerOutln("Starter House: No", logger);
+        loggerOutln("Purchase Price: "+activePlayer.house.purchasePrice, logger);
+        loggerOutln("Sell Price: "+activePlayer.house.sellPrice, logger);
+        loggerOutln("", logger);
         displayTurnOptions();
     }
     void viewFamily(){
-        System.out.println("");
-        System.out.println(activePlayer.name+" Family Information:");
-        if(activePlayer.hasSpouse)System.out.println("Married: Yes");
-        else System.out.println("Married: No");
-        System.out.println("Children: "+activePlayer.children);
-        System.out.println("");
+        loggerOutln("", logger);
+        loggerOutln(activePlayer.name+" Family Information:", logger);
+        if(activePlayer.hasSpouse)loggerOutln("Married: Yes", logger);
+        else loggerOutln("Married: No", logger);
+        loggerOutln("Children: "+activePlayer.children, logger);
+        loggerOutln("", logger);
         displayTurnOptions();
     }
 
     void viewLTI(){
-        System.out.println("");
-        System.out.println(activePlayer.name+" Long-Term Investment Information:");
-        System.out.println("Current investment number: "+activePlayer.LTI);
-        System.out.println("Times investment has been rolled: "+activePlayer.LTIhits);
-        System.out.println("Money gained from investment: $"+((5000*activePlayer.LTIhits)-10000));
-        System.out.println("");
+        loggerOutln("", logger);
+        loggerOutln(activePlayer.name+" Long-Term Investment Information:", logger);
+        loggerOutln("Current investment number: "+activePlayer.LTI, logger);
+        loggerOutln("Times investment has been rolled: "+activePlayer.LTIhits, logger);
+        loggerOutln("Money gained from investment: $"+((5000*activePlayer.LTIhits)-10000), logger);
+        loggerOutln("", logger);
         displayTurnOptions();
     }
 
     void purchaseLTI(){
-        System.out.println("");
-        System.out.println("Would you like to purchase a Long-Term Investment for $10,000?");
-        System.out.println("Each time somebody rolls the number associated with your investment, you earn $5,000 from the bank!");
-        System.out.println("However, each number can only be bought once, so make sure to buy the number you want fast!");
+        loggerOutln("", logger);
+        loggerOutln("Would you like to purchase a Long-Term Investment for $10,000?", logger);
+        loggerOutln("Each time somebody rolls the number associated with your investment, you earn $5,000 from the bank!", logger);
+        loggerOutln("However, each number can only be bought once, so make sure to buy the number you want fast!", logger);
         boolean selection = input.receiveBooleanSelection();
         if(selection){
             BoardSpace tempSpace = new BoardSpace(new BoardSpaceCard(new BuyLTICommand(receiver)), false);
@@ -232,16 +235,16 @@ public class Simulation {
             tempSpace=null;
         }
         else{
-            System.out.println("You declined to buy a Long-Term Investment.");
+            loggerOutln("You declined to buy a Long-Term Investment.", logger);
         }
-        System.out.println("");
+        loggerOutln("", logger);
         displayTurnOptions();
     }
 
     void newPlayerTurn(){
         newActivePlayer();
-        System.out.println("");
-        System.out.println("It is now " + activePlayer.name + " turn");
+        loggerOutln("", logger);
+        loggerOutln("It is now " + activePlayer.name + " turn", logger);
         displayTurnOptions();
     }
 
@@ -250,6 +253,8 @@ public class Simulation {
         if(playerIndex >= players.size()){
             round++;
             playerIndex = 0;
+            logger.close();
+            logger.startLog(round);
         }
         activePlayer = players.get(playerIndex);
     }
